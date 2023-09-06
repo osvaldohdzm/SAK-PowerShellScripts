@@ -1,0 +1,9 @@
+Set-ExecutionPolicy Bypass -Scope Process
+Set-ExecutionPolicy Restriced -Scope Process
+
+
+Windwos + I
+Sistema
+alcenamiento
+Confirueiocn avacnazada
+donde se guarda

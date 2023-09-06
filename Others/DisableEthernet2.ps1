@@ -1,0 +1,1 @@
+Disable-NetAdapter -Name "Ethernet 2"
