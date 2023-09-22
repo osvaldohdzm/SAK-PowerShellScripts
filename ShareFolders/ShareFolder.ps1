@@ -29,7 +29,7 @@ Especifica el nombre del recurso compartido (obligatorio).
 Especifica la ruta de la carpeta a compartir. Si no se proporciona, se usará el directorio actual del script.
 
 .EXAMPLE
-.\ShareFolder.ps1 -persistentAuthShare -shareName "PrivateSharingFolder" -dir "D:\$env:USERNAME\Desktop\Home"
+.\ShareFolder.ps1 -persistentAuthShare -shareName "PrivateSharingFolder" -dir "D:\$env:USERNAME\Desktop"
 
 Comparte la carpeta de archivos privados.
 
@@ -83,20 +83,43 @@ if ($systemLanguage -eq "es-ES" -or $systemLanguage -eq "es-MX") {
     $guestAccountName = "Invitado"
 }
 
+# Lista de ubicaciones a excluir o mantener según sea necesario
+$ubicacionesAExcluir = @('ADMIN$', 'C$', 'D$', 'IPC$')
+#$ubicacionesAExcluir = @()  # Dejar esta línea en blanco para eliminar todos los recursos compartidos
+
 # Verificar si se proporciona el parámetro -unShareAll
 if ($unShareAll) {
     Write-Host "Deshaciendo la compartición de recursos compartidos personalizados..."
     Get-WmiObject Win32_Share | ForEach-Object {
         $shareName = $_.Name
-        # Excluir recursos compartidos del sistema
-        if ($shareName -notin ('ADMIN$', 'C$', 'D$', 'IPC$')) {
+        $eliminarRecursoCompartido = $true
+        
+        # Verificar si el recurso compartido está en la lista de ubicaciones a excluir
+        if ($shareName -in $ubicacionesAExcluir) {
+            $eliminarRecursoCompartido = $false
+        }
+        
+        if ($eliminarRecursoCompartido) {
             net user $guestAccountName /active:no
-            Remove-SmbShare -Name $shareName -Force -Confirm:$false
-            Write-Host "Recurso compartido $shareName eliminado."
+            
+            # Verificar si el recurso compartido tiene un signo de pesos '$' en su nombre
+            if ($shareName -match '\$') {
+                Write-Host "Eliminando recurso compartido $shareName con \$ en el nombre..."
+                net share $shareName /delete
+            } else {
+                Remove-SmbShare -Name $shareName -Force -Confirm:$false
+                Write-Host "Recurso compartido $shareName eliminado."
+            }
+        } else {
+            # Aquí puedes agregar código adicional si deseas mantener recursos compartidos específicos
+            Write-Host "Recurso compartido $shareName se mantendrá."
         }
     }
     exit
 }
+
+
+
 
 # Verificar si se proporciona el parámetro -dir
 if ($dir) {
