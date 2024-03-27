@@ -63,9 +63,6 @@ foreach ($WordFile in $WordFiles) {
 
         }       
 
-        Write-Host "   Presiona Enter para continuar..."
-        $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown').Key
-
         # Save and close the document
         $Document.Save()
         $Document.Close()
