@@ -17,7 +17,7 @@ foreach ($carpetaRepositorio in $carpetasRepositorios) {
             Set-Location -Path $repositorio.FullName
 
             # Configura el comando safe.directory
-            git config --local --add safe.directory D:/Users/osvaldohm/Repositories/secutils
+            git config --local --add safe.directory $repositorio.FullName
 
             # Realiza las operaciones Git necesarias (pull, add, commit, push)
             git pull origin
