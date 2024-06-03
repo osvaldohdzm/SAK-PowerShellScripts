@@ -16,19 +16,16 @@ foreach ($carpetaRepositorio in $carpetasRepositorios) {
             # Configura el comando safe.directory
             git config --global --add safe.directory $repositorio.FullName
             git config --local --add safe.directory $repositorio.FullName
-            
-            echo asdasdsd
-            $repositorio.FullName
 
             # Cambia el directorio de trabajo al repositorio actual
-            Set-Location -Path $repositorio.FullName           
+            Set-Location -Path $repositorio.FullName
 
             # Realiza las operaciones Git necesarias (pull, add, commit, push)
             git pull origin
             git add .
             $archivosAgregados = git diff --staged --name-only
             $mensajeCommit = "Se agregaron o modificaron los siguientes archivos:`n$archivosAgregados"
-            git commit -m $mensajeCommit
+            git commit -m "$mensajeCommit"
             git push origin
 
             # Volver al directorio principal de repositorios
