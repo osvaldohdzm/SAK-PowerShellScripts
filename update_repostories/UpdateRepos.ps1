@@ -24,7 +24,6 @@ foreach ($carpetaRepositorio in $carpetasRepositorios) {
             # Realiza las operaciones Git necesarias (pull, add, commit, push)
             git pull origin
             git add .
-            $archivosAgregados = git diff --staged --name-only
             $mensajeCommit = "Se agregaron o modificaron los siguientes archivos:`n$archivosAgregados"
             git commit -m "$mensajeCommit"
             git push origin
