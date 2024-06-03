@@ -15,11 +15,12 @@ foreach ($carpetaRepositorio in $carpetasRepositorios) {
         if (Test-Path -Path (Join-Path -Path $repositorio.FullName -ChildPath ".git") -PathType Container) {
             write-host working on $repositorio.FullName
             # Configura el comando safe.directory            
-            git config --global --add safe.directory $repositorio.FullName
 
             # Cambia el directorio de trabajo al repositorio actual
             Set-Location -Path $repositorio.FullName
             
+            
+            git config --global --add safe.directory $repositorio.FullName
             git config --local --add safe.directory $repositorio.FullName
 
             # Realiza las operaciones Git necesarias (pull, add, commit, push)
