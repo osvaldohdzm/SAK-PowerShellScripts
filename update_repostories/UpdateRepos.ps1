@@ -13,7 +13,8 @@ foreach ($carpetaRepositorio in $carpetasRepositorios) {
     foreach ($repositorio in $repositorios) {
         # Verifica si el directorio actual es un repositorio Git
         if (Test-Path -Path (Join-Path -Path $repositorio.FullName -ChildPath ".git") -PathType Container) {
-            # Configura el comando safe.directory
+            write-host working on $repositorio.FullName
+            # Configura el comando safe.directory            
             git config --global --add safe.directory $repositorio.FullName
 
             # Cambia el directorio de trabajo al repositorio actual
