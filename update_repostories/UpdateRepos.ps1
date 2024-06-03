@@ -1,7 +1,7 @@
 # Lista de carpetas con repositorios
 $carpetasRepositorios = @(
-"D:\Users\osvaldohm\Repositories",
-"D:\Users\osvaldohm\Repositories"
+    "D:\Users\osvaldohm\Repositories",
+    "D:\Users\osvaldohm\Repositories"
 )
 
 # Bucle a través de cada carpeta de repositorio
@@ -15,22 +15,16 @@ foreach ($carpetaRepositorio in $carpetasRepositorios) {
         if (Test-Path -Path (Join-Path -Path $repositorio.FullName -ChildPath ".git") -PathType Container) {
             # Cambia el directorio de trabajo al repositorio actual
             Set-Location -Path $repositorio.FullName
-            
+
+            # Configura el comando safe.directory
+            git config --local --add safe.directory D:/Users/osvaldohm/Repositories/secutils
+
+            # Realiza las operaciones Git necesarias (pull, add, commit, push)
             git pull origin
-
-            # Agregar todos los cambios
             git add .
-
-            # Obtener los archivos que se han agregado al commit
             $archivosAgregados = git diff --staged --name-only
-
-            # Generar un mensaje de commit basado en los archivos agregados
             $mensajeCommit = "Se agregaron o modificaron los siguientes archivos:`n$archivosAgregados"
-
-            # Realizar un commit con el mensaje generado
             git commit -m $mensajeCommit
-
-            # Hacer push a la rama origin (asegúrate de tener una rama llamada 'origin' configurada)
             git push origin
 
             # Volver al directorio principal de repositorios
