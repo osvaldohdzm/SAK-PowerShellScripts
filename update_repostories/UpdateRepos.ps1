@@ -13,12 +13,15 @@ foreach ($carpetaRepositorio in $carpetasRepositorios) {
     foreach ($repositorio in $repositorios) {
         # Verifica si el directorio actual es un repositorio Git
         if (Test-Path -Path (Join-Path -Path $repositorio.FullName -ChildPath ".git") -PathType Container) {
-            # Cambia el directorio de trabajo al repositorio actual
-            Set-Location -Path $repositorio.FullName
-
             # Configura el comando safe.directory
-            git config --local --add safe.directory $repositorio.FullName
             git config --global --add safe.directory $repositorio.FullName
+            git config --local --add safe.directory $repositorio.FullName
+            
+            echo asdasdsd
+            $repositorio.FullName
+
+            # Cambia el directorio de trabajo al repositorio actual
+            Set-Location -Path $repositorio.FullName           
 
             # Realiza las operaciones Git necesarias (pull, add, commit, push)
             git pull origin
