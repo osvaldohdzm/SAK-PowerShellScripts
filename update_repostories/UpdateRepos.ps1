@@ -1,7 +1,7 @@
 # Lista de carpetas con repositorios
 $carpetasRepositorios = @(
-"D:\osvaldohm\Desktop\Repositories",
-"D:\osvaldohm\Desktop\KaliHome\Repositories"
+"D:\Users\osvaldohm\Repositories",
+"D:\Users\osvaldohm\Repositories"
 )
 
 # Bucle a través de cada carpeta de repositorio
