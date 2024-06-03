@@ -18,6 +18,7 @@ foreach ($carpetaRepositorio in $carpetasRepositorios) {
 
             # Configura el comando safe.directory
             git config --local --add safe.directory $repositorio.FullName
+            git config --global --add safe.directory $repositorio.FullName
 
             # Realiza las operaciones Git necesarias (pull, add, commit, push)
             git pull origin
