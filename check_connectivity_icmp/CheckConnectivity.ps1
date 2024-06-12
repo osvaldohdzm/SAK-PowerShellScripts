@@ -10,7 +10,7 @@ $targets = Import-Csv $FilePath
 $outputFilePath = "Output.csv"
 
 # Crear el archivo CSV de salida con los encabezados
-"PrivateHostName,PingStatusPrivateHostName,PrivateIPv4,PingStatusPrivateIPv4,PingStatus" | Out-File -FilePath $outputFilePath -Encoding UTF8
+"Hostname,PingStatusHostname,IPv4,PingStatusIPv4,PingStatus" | Out-File -FilePath $outputFilePath -Encoding UTF8
 
 # Función para realizar el ping y devolver el estado
 function Test-Ping ($target) {
@@ -44,12 +44,12 @@ foreach ($target in $targets) {
     $ipv4PingStatus = ""
     $overallStatus = "NOT OK"  
 
-    if (-not [string]::IsNullOrEmpty($target.PrivateHostName)) {
-        $hostnamePingStatus = Test-Ping $target.PrivateHostName
+    if (-not [string]::IsNullOrEmpty($target.Hostname)) {
+        $hostnamePingStatus = Test-Ping $target.Hostname
     }
 
-    if (-not [string]::IsNullOrEmpty($target.PrivateIPv4)) {
-        $ipv4PingStatus = Test-Ping $target.PrivateIPv4
+    if (-not [string]::IsNullOrEmpty($target.IPv4)) {
+        $ipv4PingStatus = Test-Ping $target.IPv4
     }
 
     # Determinar el estado general
@@ -58,7 +58,7 @@ foreach ($target in $targets) {
     }
 
     # Construir la línea para el archivo de salida
-    $outputLine = "$($target.PrivateHostName),$hostnamePingStatus,$($target.PrivateIPv4),$ipv4PingStatus,$overallStatus"
+    $outputLine = "$($target.Hostname),$hostnamePingStatus,$($target.IPv4),$ipv4PingStatus,$overallStatus"
 
     # Añadir la línea al archivo de salida solo si no se ha omitido
     $outputLine | Out-File -FilePath $outputFilePath -Append -Encoding UTF8

@@ -17,8 +17,7 @@ foreach ($carpetaRepositorio in $carpetasRepositorios) {
             # Configura el comando safe.directory            
 
             # Cambia el directorio de trabajo al repositorio actual
-            Set-Location -Path $repositorio.FullName
-            
+            Set-Location -Path $repositorio.FullName            
             
             git config --global --add safe.directory $repositorio.FullName
             git config --local --add safe.directory $repositorio.FullName
