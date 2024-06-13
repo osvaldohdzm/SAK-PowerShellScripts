@@ -1,0 +1,1 @@
+Compress-Archive -Path "C:\Users\osvaldohm\Desktop\platform-tools" -DestinationPath "./sonar_output.zip" -Force; Rename-Item -Path "./sonar_output.zip" -NewName "./sonar_output.sonar" -Force

@@ -1,0 +1,1 @@
+Compress-Archive -Path "D:\Codigo\sinavid-git\sinavid-dye\CodigoSinavidDye\SINAVIDdye" -DestinationPath "./sonar_output.zip" -Force; Rename-Item -Path "./sonar_output.zip" -NewName "./sonar_output.sonar" -Force
