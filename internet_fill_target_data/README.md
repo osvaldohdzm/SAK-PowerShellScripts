@@ -1,0 +1,1 @@
+ archivo CSV sin encabezados y complete los campos faltantes (como obtener el FQDN si solo se tiene la IP, o viceversa)
