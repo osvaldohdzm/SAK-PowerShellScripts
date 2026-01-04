@@ -10,7 +10,7 @@ $SourceDir    = "C:\Users\osvaldohm\Desktop\Base\03 Knowledge"
 $TargetDir    = "C:\Users\osvaldohm\Desktop\Base\09 Sistema Documental"
 $TemplatePath = "C:\Users\osvaldohm\Desktop\Base\10 Plantillas\Plantilla Documental.docx"
 # Ruta exacta donde guardaste el archivo Lua
-$LuaFilterPath = "H:\Mi unidad\OrbitalSec\10 Plantillas\metadata.lua" 
+$LuaFilterPath = "C:\Users\osvaldohm\Desktop\Base\10 Plantillas\metadata.lua"
 $PandocExe    = "$env:LOCALAPPDATA\Pandoc\pandoc.exe"
 
 # Códigos de Word
@@ -68,7 +68,7 @@ try {
 
         # --- A. PANDOC ---
         # NUEVO: Se agregó --lua-filter para procesar los metadatos personalizados
-        $PandocArgs = "`"$($File.FullName)`" -o `"$DocxOutput`" --reference-doc=`"$TemplatePath`" --lua-filter=`"$LuaFilterPath`" --resource-path=`"$($File.DirectoryName)`" --toc --toc-depth=2 --highlight-style=breezedark"
+        $PandocArgs = "`"$($File.FullName)`" -o `"$DocxOutput`" --reference-doc=`"$TemplatePath`" --lua-filter=`"$LuaFilterPath`" --resource-path=`"$($File.DirectoryName)`" --toc --toc-depth=2 --syntax-highlighting=breezedark"
         
         $Proc = Start-Process -FilePath $PandocExe -ArgumentList $PandocArgs -Wait -PassThru -NoNewWindow
 
