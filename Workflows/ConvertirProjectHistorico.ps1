@@ -1,5 +1,5 @@
 ﻿# =============================================================================
-# SCRIPT: Convertir Project a PDF (Semana Pendiente + Ordenar y Ocultar EDT)
+# SCRIPT: Convertir Project a PDF (Histórico Completo + Ordenar y Ocultar EDT)
 # =============================================================================
 
 # 1. CONFIGURACION DE ENTORNO
@@ -22,7 +22,7 @@ $BloqueConversion = {
     # --- CALCULO DE RUTAS ---
     try {
         $DirectorioBase = [System.IO.Path]::GetDirectoryName($RutaOrigen)
-        $NombrePDF = "Seguimiento Semanal $FechaHoy (Solo Pendientes).pdf"
+        $NombrePDF = "Seguimiento Semanal $FechaHoy (Historico).pdf"
         $RutaDestino = [System.IO.Path]::Combine($DirectorioBase, $NombrePDF)
     }
     catch {
@@ -81,24 +81,16 @@ $BloqueConversion = {
         }
         
 
-        # --- APLICAR FILTRO ---
-        Write-Host "Aplicando filtro nativo 'Esta Semana'..." -ForegroundColor Yellow
-        $pjAutoFilterThisWeek = 7
-
-        if (-not $MSProject.AutoFilter) { $MSProject.AutoFilter() }
-
+        # --- QUITAR FILTROS (MOSTRAR TODO) ---
+        Write-Host "Quitando filtros (Vista Histórica)..." -ForegroundColor Yellow
         try {
-            $MSProject.SetAutoFilter("Fin", $pjAutoFilterThisWeek)
+            $MSProject.FilterApply("Todas las tareas")
         }
         catch {
-            Write-Warning "No se encontró columna 'Fin', intentando con 'Finish'..."
-            try {
-                $MSProject.SetAutoFilter("Finish", $pjAutoFilterThisWeek)
-            }
-            catch {
-                throw "ERROR: No se encontró la columna de fecha (Fin/Finish)."
-            }
+            $MSProject.FilterApply("All Tasks")
         }
+
+        if ($MSProject.AutoFilter) { $MSProject.AutoFilter() } # Desactiva autofiltros si están activos
 
         # --- CORRECCION: ORDENAR POR EDT (WBS) ---
         # Usamos solo 2 argumentos para evitar el error de "Argumento no válido"
@@ -112,7 +104,7 @@ $BloqueConversion = {
         }
 
         # --- EXPORTAR A PDF ---
-        Write-Host "Exportando vista filtrada a PDF..."
+        Write-Host "Exportando vista histórica (sin filtros) a PDF..."
         $MSProject.DocumentExport($RutaDestino, 0) # 0 = PDF
 
         Write-Host "EXITO: PDF generado correctamente." -ForegroundColor Green
@@ -166,7 +158,7 @@ try {
 '@ -ForegroundColor Cyan
     # --------------------
 
-    Write-Host "`nCerrando en 3 segundos..." -ForegroundColor Cyan
+    Write-Host "`nCerrando en 5 segundos..." -ForegroundColor Cyan
     Start-Sleep -Seconds 3
 }
 catch {
@@ -179,6 +171,5 @@ catch {
     Write-Host "            OCURRIO UN ERROR            " -BackgroundColor Red -ForegroundColor White
     Write-Host "----------------------------------------"
     
-    Write-Host "`nCerrando en 5 segundos..." -ForegroundColor Cyan
-    Start-Sleep -Seconds 5
+    Read-Host "Presione ENTER para cerrar..."
 }
