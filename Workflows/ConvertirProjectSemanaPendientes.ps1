@@ -15,7 +15,7 @@ $BloqueConversion = {
     $FechaHoy = Get-Date -Format "yyyyMMdd"
     
     # RUTA ORIGEN
-    $RutaOrigen = "C:\Users\osvaldohm\Desktop\Base\04 Proyectos\01 Gestión de Proyectos\Gestión de proyectos.mpp"
+    $RutaOrigen = "C:\Users\osvaldohm\Desktop\Base\04 Proyectos\03 Gestión de Proyectos\Gestión de proyectos.mpp"
 
     Write-Host "Iniciando proceso para fecha: $FechaHoy" -ForegroundColor Cyan
 

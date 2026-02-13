@@ -1,116 +1,187 @@
 ﻿<#
 .SYNOPSIS
-    Convierte MD a PDF usando plantilla DOCX de referencia, inyecta TOC, estilos de código
-    y procesa metadatos personalizados (Versión, Código) vía Lua Filter.
-    AUTOR: Osvaldo Hernández
+    MASTER SCRIPT: Markdown -> DOCX (Temp) -> PDF -> PUBLISH
+    VERSIÓN: 7.0 (Clean Start + Hidden Folder Filter)
+    REGLAS:
+      1. NO generar DOCX en destino (Solo PDF).
+      2. NUNCA leer carpetas que inicien con "." (ej. .obsidian).
+      3. SIEMPRE limpiar carpeta destino antes de empezar.
 #>
 
-# --- CONFIGURACIÓN DE RUTAS ---
-$SourceDir    = "C:\Users\osvaldohm\Desktop\Base\03 Knowledge"
+# --- 0. CONFIGURACIÓN DE ENTORNO ---
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$ErrorActionPreference = "Stop"
+
+# --- 1. RUTAS (AJUSTAR AQUÍ) ---
+$SourceDir    = "C:\Users\osvaldohm\Desktop\Base\03 Knowledge Center"
 $TargetDir    = "C:\Users\osvaldohm\Desktop\Base\09 Sistema Documental"
 $TemplatePath = "C:\Users\osvaldohm\Desktop\Base\10 Plantillas\Plantilla Documental.docx"
-# Ruta exacta donde guardaste el archivo Lua
-$LuaFilterPath = "C:\Users\osvaldohm\Desktop\Base\10 Plantillas\metadata.lua"
-$PandocExe    = "$env:LOCALAPPDATA\Pandoc\pandoc.exe"
 
-# Códigos de Word
-$wdFormatPDF  = 17      
-$wdAlertsNone = 0      
+# Constantes de Word
+$wdFormatPDF        = 17      
+$wdAlertsNone       = 0
+$wdDoNotSaveChanges = 0
 
-# --- 1. LIMPIEZA ---
-Write-Host "Limpiando procesos y preparando destino..." -ForegroundColor DarkGray
-Stop-Process -Name "winword" -Force -ErrorAction SilentlyContinue
+# --- 2. FUNCIONES DE UTILIDAD ---
 
+function Log-Activity {
+    param(
+        [string]$Message,
+        [string]$Type = "INFO" 
+    )
+    $Timestamp = Get-Date -Format "HH:mm:ss"
+    switch ($Type) {
+        "INFO"    { Write-Host "[$Timestamp] [INFO]    $Message" -ForegroundColor Gray }
+        "STEP"    { Write-Host "[$Timestamp] [PANDO]   $Message" -ForegroundColor Cyan }
+        "WORD"    { Write-Host "[$Timestamp] [WORD]    $Message" -ForegroundColor Blue }
+        "SUCCESS" { Write-Host "[$Timestamp] [OK]      $Message" -ForegroundColor Green }
+        "WARN"    { Write-Host "[$Timestamp] [WARN]    $Message" -ForegroundColor Yellow }
+        "ERROR"   { Write-Host "[$Timestamp] [ERROR]   $Message" -ForegroundColor Red }
+        "CLEAN"   { Write-Host "[$Timestamp] [CLEAN]   $Message" -ForegroundColor Magenta }
+    }
+}
+
+function Invoke-DocReplace {
+    param($Document, [string]$FindText, [string]$ReplaceText)
+    if ($ReplaceText.Length -gt 250) { $ReplaceText = $ReplaceText.Substring(0, 250) }
+
+    foreach ($StoryRange in $Document.StoryRanges) {
+        $Range = $StoryRange
+        do {
+            try {
+                $Find = $Range.Find
+                $Find.Text = $FindText
+                $Find.Replacement.Text = $ReplaceText
+                $Find.Execute($FindText, $false, $false, $false, $false, $false, $true, 1, $false, $ReplaceText, 2) | Out-Null
+            } catch {}
+            $Range = $Range.NextStoryRange
+        } while ($Range -ne $null)
+    }
+}
+
+# --- 3. INICIO Y LIMPIEZA AGRESIVA ---
+Write-Host "`n========================================================" -ForegroundColor Magenta
+Write-Host "   SISTEMA DE DOCUMENTACIÓN - V7.0" -ForegroundColor Magenta
+Write-Host "========================================================`n" -ForegroundColor Magenta
+
+if (!(Test-Path $SourceDir)) { Log-Activity "No existe origen: $SourceDir" "ERROR"; exit }
+if (!(Test-Path $TemplatePath)) { Log-Activity "No existe plantilla: $TemplatePath" "ERROR"; exit }
+
+# REGLA 2: LIMPIEZA TOTAL DEL DESTINO
 if (Test-Path $TargetDir) {
-    Get-ChildItem -Path $TargetDir -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
-}
-New-Item -Path $TargetDir -ItemType Directory -Force | Out-Null
-
-# --- 2. COPIAR SVGs ---
-Write-Host "Copiando archivos SVG..." -ForegroundColor Yellow
-Get-ChildItem -Path $SourceDir -Filter "*.svg" -Recurse | ForEach-Object {
-    $RelativePath = $_.DirectoryName.Substring($SourceDir.Length).TrimStart("\")
-    $DestSvgDir = Join-Path -Path $TargetDir -ChildPath $RelativePath
-    if (-not (Test-Path $DestSvgDir)) { New-Item -ItemType Directory -Path $DestSvgDir -Force | Out-Null }
-    Copy-Item -Path $_.FullName -Destination $DestSvgDir -Force
+    Log-Activity "Vaciando carpeta destino (Clean Start)..." "CLEAN"
+    # Borra todo el contenido dentro de TargetDir, pero deja la carpeta raíz
+    Get-ChildItem -Path $TargetDir -Recurse | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+} else {
+    New-Item -Path $TargetDir -ItemType Directory -Force | Out-Null
 }
 
-# --- 3. INICIAR WORD (En segundo plano) ---
+# Limpieza de procesos Word
+Get-Process winword -ErrorAction SilentlyContinue | Stop-Process -Force
+
+# --- 4. STAGING AREA (TEMP) ---
+$SessionID = -join ((65..90) + (97..122) | Get-Random -Count 5 | ForEach-Object {[char]$_})
+$StagingDir = Join-Path $env:TEMP "DocGen_$SessionID"
+New-Item -Path $StagingDir -ItemType Directory -Force | Out-Null
+Log-Activity "Staging temporal: $StagingDir" "INFO"
+
+# Detectar Pandoc
+$PandocExe = Get-Command pandoc -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source
+if (!$PandocExe) { Log-Activity "Pandoc no instalado." "ERROR"; exit }
+
+# --- 5. BUCLE PRINCIPAL ---
+$WordApp = $null
+$TotalErrors = 0
+$TotalProcessed = 0
+
 try {
+    Log-Activity "Iniciando motor Word..." "WORD"
     $WordApp = New-Object -ComObject Word.Application
     $WordApp.Visible = $false
     $WordApp.DisplayAlerts = $wdAlertsNone
-}
-catch {
-    Write-Error "No se pudo iniciar Word. Verifica la instalación de Office."
-    exit
-}
 
-# --- 4. PROCESAMIENTO ---
-try {
-    $MarkDownFiles = Get-ChildItem -Path $SourceDir -Filter "*.md" -Recurse
+    $Files = Get-ChildItem -Path $SourceDir -Filter "*.md" -Recurse
 
-    foreach ($File in $MarkDownFiles) {
-        # Ignorar archivos de excalidraw o metadatos técnicos
-        $ContentHead = Get-Content -Path $File.FullName -TotalCount 15 -ErrorAction SilentlyContinue
-        if ($ContentHead -match "excalidraw-plugin: parsed" -or $File.Name -like "*.excalidraw.md") { continue }
-
-        # Estructura de carpetas espejo
-        $RelativePath = $File.DirectoryName.Substring($SourceDir.Length).TrimStart("\")
-        $CurrentTargetDir = Join-Path -Path $TargetDir -ChildPath $RelativePath
-        if (-not (Test-Path $CurrentTargetDir)) { New-Item -ItemType Directory -Path $CurrentTargetDir -Force | Out-Null }
-
-        # Rutas de salida
-        $DocxOutput = [string](Join-Path -Path $CurrentTargetDir -ChildPath ($File.BaseName + ".docx"))
-        $PdfOutput = [string](Join-Path -Path $CurrentTargetDir -ChildPath ($File.BaseName + ".pdf"))
-
-        Write-Host "Procesando: $($File.BaseName)" -ForegroundColor Cyan
-
-        # --- A. PANDOC ---
-        # NUEVO: Se agregó --lua-filter para procesar los metadatos personalizados
-        $PandocArgs = "`"$($File.FullName)`" -o `"$DocxOutput`" --reference-doc=`"$TemplatePath`" --lua-filter=`"$LuaFilterPath`" --resource-path=`"$($File.DirectoryName)`" --toc --toc-depth=2 --syntax-highlighting=breezedark"
+    foreach ($File in $Files) {
         
-        $Proc = Start-Process -FilePath $PandocExe -ArgumentList $PandocArgs -Wait -PassThru -NoNewWindow
+        # --- REGLA 1: FILTROS DE CARPETA (.obsidian, etc) ---
+        # Si la ruta contiene "\.", es una carpeta oculta o de sistema
+        if ($File.FullName -match "\\\.") {
+            # No lo logueamos como WARN para no ensuciar la consola, solo lo ignoramos silenciosamente o como debug
+            # Log-Activity "Ignorando archivo oculto/sistema: $($File.Name)" "INFO"
+            continue
+        }
 
-        if ($Proc.ExitCode -eq 0 -and (Test-Path $DocxOutput)) {
-            Start-Sleep -Milliseconds 300 
+        # Filtros estándar (Drafts)
+        if ($File.Name -match "^(DRAFT|FIX|IGNORE)") { continue }
+        
+        # Filtro Excalidraw
+        if ($File.Name -like "*.excalidraw.md") { continue }
+
+        Write-Host "--------------------------------------------------------" -ForegroundColor DarkGray
+        $TotalProcessed++
+        Log-Activity "Procesando: $($File.BaseName)" "INFO"
+
+        # --- A. METADATOS ---
+        $HeadContent = (Get-Content $File.FullName -TotalCount 50 -Encoding UTF8 -ErrorAction SilentlyContinue) -join "`n"
+        $Metadata = @{
+            "{{TITLE}}" = $File.BaseName.ToUpper(); "{{CODIGO}}" = "SIN-CODIGO"; 
+            "{{VERSION}}" = "1.0"; "{{DATE}}" = (Get-Date -Format "yyyy-MM-dd")
+        }
+        if ($HeadContent -match '(?im)^title:\s*["'']?([^"''\r\n]+)["'']?') { $Metadata["{{TITLE}}"] = $Matches[1].Trim() }
+        if ($HeadContent -match '(?im)^codigo:\s*["'']?([^"''\r\n]+)["'']?') { $Metadata["{{CODIGO}}"] = $Matches[1].Trim() }
+        
+        # --- B. RUTAS ---
+        $RelPath = $File.DirectoryName.Substring($SourceDir.Length).TrimStart("\")
+        $FinalDestDir = Join-Path $TargetDir $RelPath
+        if (!(Test-Path $FinalDestDir)) { New-Item -Type Directory -Path $FinalDestDir -Force | Out-Null }
+
+        $TempDocx = Join-Path $StagingDir ($File.BaseName + ".docx")
+        $TempPdf  = Join-Path $StagingDir ($File.BaseName + ".pdf")
+        $FinalPdfPath = Join-Path $FinalDestDir ($File.BaseName + ".pdf")
+
+        # --- C. PANDOC (Markdown -> DOCX en Temp) ---
+        $PandocArgs = "`"$($File.FullName)`" -o `"$TempDocx`" --reference-doc=`"$TemplatePath`" --resource-path=`"$($File.DirectoryName)`" --toc --toc-depth=2 --metadata toc-title=`"Índice`" -V lang=es-MX"
+        $Proc = Start-Process $PandocExe -ArgumentList $PandocArgs -Wait -PassThru -NoNewWindow
+        
+        if ($Proc.ExitCode -ne 0) {
+            Log-Activity "Error Pandoc." "ERROR"; $TotalErrors++; continue
+        }
+
+        # --- D. WORD (DOCX -> PDF en Temp) ---
+        $Doc = $null
+        try {
+            $Doc = $WordApp.Documents.Open($TempDocx)
+            foreach ($Key in $Metadata.Keys) { Invoke-DocReplace -Document $Doc -FindText $Key -ReplaceText $Metadata[$Key] }
+            try { $Doc.Fields.Update() | Out-Null } catch {}
             
-            $Doc = $null 
-            try {
-                # --- B. WORD TO PDF ---
-                $Doc = $WordApp.Documents.Open($DocxOutput)
-                
-                if ($Doc) {
-                    # Actualizar campos (Importante para que STYLEREF capture los nuevos datos del Lua)
-                    $Doc.Fields.Update() 
-                    
-                    # Guardar como PDF
-                    $Doc.SaveAs([string]$PdfOutput, [int]$wdFormatPDF)
-                    $Doc.Close([ref]$false)
-                    Write-Host "  [OK] PDF generado con metadatos y estilos." -ForegroundColor Green
-                }
-            }
-            catch {
-                Write-Host "  [!] ERROR EN WORD: $($_.Exception.Message)" -ForegroundColor Red
-            }
-            finally {
-                if ($Doc) { 
-                    [System.Runtime.InteropServices.Marshal]::ReleaseComObject($Doc) | Out-Null 
-                    $Doc = $null
-                }
-                # Borrar DOCX intermedio para dejar limpia la carpeta
-                Remove-Item -Path $DocxOutput -Force -ErrorAction SilentlyContinue
-            }
-        } else {
-            Write-Host "  [!] Error en Pandoc. Verifica el Markdown o la ruta del Lua." -ForegroundColor Magenta
+            $Doc.SaveAs([string]$TempPdf, [int]$wdFormatPDF)
+            $Doc.Close($wdDoNotSaveChanges)
+            [System.Runtime.InteropServices.Marshal]::ReleaseComObject($Doc) | Out-Null
+            $Doc = $null
+        } catch {
+            Log-Activity "Error Word: $($_.Exception.Message)" "ERROR"
+            if ($Doc) { $Doc.Close($wdDoNotSaveChanges); [System.Runtime.InteropServices.Marshal]::ReleaseComObject($Doc) | Out-Null }
+            $TotalErrors++; continue
+        }
+
+        # --- E. MOVER PDF FINAL ---
+        if (Test-Path $TempPdf) {
+            Move-Item -Path $TempPdf -Destination $FinalPdfPath -Force
+            Log-Activity "Publicado OK" "SUCCESS"
         }
     }
-}
-finally {
-    if ($WordApp) { 
-        $WordApp.Quit()
-        [System.Runtime.InteropServices.Marshal]::ReleaseComObject($WordApp) | Out-Null 
-    }
-    Stop-Process -Name "winword" -Force -ErrorAction SilentlyContinue
-    Write-Host "`nProceso finalizado." -ForegroundColor Cyan
+
+} catch {
+    Log-Activity "FATAL: $($_.Exception.Message)" "ERROR"
+} finally {
+    # --- 6. LIMPIEZA FINAL ---
+    if ($WordApp) { $WordApp.Quit($wdDoNotSaveChanges); [System.Runtime.InteropServices.Marshal]::ReleaseComObject($WordApp) | Out-Null }
+    if (Test-Path $StagingDir) { Remove-Item $StagingDir -Recurse -Force -ErrorAction SilentlyContinue }
+    [GC]::Collect()
+    
+    Write-Host "`nRESUMEN:"
+    Write-Host " Archivos Procesados: $TotalProcessed" -ForegroundColor Cyan
+    Write-Host " Errores:             $TotalErrors" -ForegroundColor ($TotalErrors -gt 0 ? "Red" : "Gray")
+    Write-Host " Destino Limpio:      SÍ" -ForegroundColor Green
 }

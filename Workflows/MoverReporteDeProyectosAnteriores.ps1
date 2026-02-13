@@ -14,8 +14,8 @@ $ContenedorBase = "C:\Users\osvaldohm\Desktop\Base\04 Proyectos"
 # 3. LOCALIZAR LA CARPETA DE ORIGEN DINÁMICAMENTE
 if (Test-Path -Path $ContenedorBase) {
     
-    # Buscamos la carpeta que empiece con "01 Gesti" dentro de la carpeta de Proyectos
-    $CarpetaProyecto = Get-ChildItem -Path $ContenedorBase -Directory | Where-Object { $_.Name -like "01 Gesti*" } | Select-Object -First 1
+    # Buscamos la carpeta que empiece con "03 Gesti" dentro de la carpeta de Proyectos
+    $CarpetaProyecto = Get-ChildItem -Path $ContenedorBase -Directory | Where-Object { $_.Name -like "03 Gesti*" } | Select-Object -First 1
     
     if ($CarpetaProyecto) {
         $RutaOrigen = $CarpetaProyecto.FullName
